@@ -1,12 +1,10 @@
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { SelectedPage } from '@/shared/types';
-
 import Logo from '@/assets/Logo.png';
 import Link from './Link';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Fragment, useState } from 'react';
 import ActionButton from '@/shared/ActionButton';
-// import ActionButton from '@/shared/ActionButton';
 
 type Props = {
   isTopOfPage: boolean;
@@ -20,12 +18,12 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
   const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
 
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
-  const navbarBackground = isTopOfPage ? '' : 'bg-primary-100 drop-shadow';
+  const navbarBackground = isTopOfPage ? '' : 'bg-secondary-400 drop-shadow';
 
   return (
     <nav>
       <div
-        className={`${navbarBackground}${flexBetween} fixed top-0 z-30 flex w-full  p-6`}
+        className={`${navbarBackground}${flexBetween} fixed top-0 z-30 flex w-full  p-4`}
       >
         {isAboveMediumScreens ? (
           <div className={`${flexCenter} gap-10 font-light`}>
@@ -43,7 +41,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
         ) : (
           <Fragment />
         )}
-        <img alt="logo" src={Logo} className=" w-64" />
+        <img alt="logo" src={Logo} className=" w-40" />
         {isAboveMediumScreens ? (
           <div className={`${flexCenter} gap-10`}>
             <Link
