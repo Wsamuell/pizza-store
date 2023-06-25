@@ -31,9 +31,9 @@ CREATE TABLE IF NOT EXISTS public.pizza_with_topping (
 );
 
 
-GRANT SELECT ON public.toppings TO authenticator;
-GRANT SELECT ON public.pizza TO authenticator;
-GRANT SELECT ON public.pizza_with_topping TO authenticator;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.toppings TO authenticator;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.pizza TO authenticator;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.pizza_with_topping TO authenticator;
 
 INSERT INTO public.toppings(name)
 VALUES ('Ham'),

@@ -4,16 +4,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        'grey-20': '#e5e5e5',
-        'grey-50': '#faedcd',
-        'grey-100': '#d5bdaf',
-        'grey-500': '#000000',
-        'primary-100': '#FFCF2D',
-        'primary-300': '#e3d5ca',
-        'primary-500': '#f9dcc4',
-        'secondary-100': '#6c757d',
-        'secondary-400': '#495057',
-        'secondary-500': '#343a40',
+        'gray-20': '#F8F4EB',
+        'gray-50': '#EFE6E6',
+        'gray-100': '#DFCCCC',
+        'gray-500': '#5E0000',
+        'primary-100': '#FFE1E0',
+        'primary-300': '#FFA6A3',
+        'primary-500': '#FF6B66',
+        'secondary-400': '#FFCD5B',
+        'secondary-500': '#FFC132',
       },
       backgroundImage: (theme) => ({
         'gradient-yellowred':
@@ -23,28 +22,6 @@ export default {
       fontFamily: {
         dmsans: ['DM Sans', 'san-serif'],
         montserrat: ['Montserrat', 'san-serif'],
-      },
-      fontSize: {
-        sm: '0.8rem',
-        base: '1rem',
-        xl: '1.25rem',
-        '2xl': '1.563rem',
-        '3xl': '1.953rem',
-        '4xl': '2.441rem',
-        '5xl': '3.052rem',
-      },
-      fontWeight: {
-        thin: '100',
-        hairline: '100',
-        extralight: '200',
-        light: '300',
-        normal: '400',
-        medium: '500',
-        semibold: '600',
-        bold: '700',
-        extrabold: '800',
-        'extra-bold': '800',
-        black: '900',
       },
       content: {
         evolvetext: "url('./assets/')",
