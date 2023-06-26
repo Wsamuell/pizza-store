@@ -2734,6 +2734,7 @@ __metadata:
     react: ^18.2.0
     react-anchor-link-smooth-scroll: 1.0.12
     react-dom: ^18.2.0
+    react-hook-form: ^7.45.0
     tailwindcss: ^3.3.2
     typescript: ^5.0.2
     vite: ^4.3.9
@@ -2932,6 +2933,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.45.0":
+  version: 7.45.0
+  resolution: "react-hook-form@npm:7.45.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 3e35253f0efb0f77f5036c74f85cbdd425adb2fad20a14fc692d573fe552b3d9b7e7ac22193cd767f265fa292c33383d8721cfbdcc5ae41910a35a1ba3655f66
   languageName: node
   linkType: hard
 
