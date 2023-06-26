@@ -27,12 +27,7 @@ const Home = ({ setSelectedPage }: Props) => {
               visible: { opacity: 1, x: 0 },
             }}
           >
-            <div className="relative">
-              <div className="before:absolute before:-left-20 before:-top-20 before:z-[-1] md:before:content-evolvetext">
-                <img alt="home-page-text" src={HomePageText} />
-              </div>
-            </div>
-
+            <img alt="home-page-text" src={HomePageText} />
             <p className="mt-8 text-sm">
               Indulge in the Irresistible Delights of Crusty Sam's Pizzeria:
               Where Every Slice is a Savory Symphony of Handcrafted Crust and
