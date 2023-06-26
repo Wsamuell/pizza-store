@@ -1,11 +1,13 @@
+import { Link } from 'react-router-dom';
 import Logo from '@/assets/Logo.png';
 import { motion } from 'framer-motion';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 const LogIn = () => {
   return (
     <section id="home" className="gap-16 bg-gray-20 py-10 md:h-full md:pb-0">
-      <motion.div className="mx-auto w-5/6 items-center justify-between md:flex md:h-5/6">
-        <div className="z-10 mt-32 md:basis-3/5">
+      <motion.div className="mx-auto flex w-5/6 flex-wrap  items-center justify-center md:flex md:h-5/6">
+        <div className="z-10 mt-32 md:basis-1/2">
           <motion.div
             className="md:-mt-20"
             initial="hidden"
@@ -19,10 +21,7 @@ const LogIn = () => {
           >
             <img alt="Logo" src={Logo} />
             <p className="mt-8 text-sm">
-              Indulge in the Irresistible Delights of Crusty Sam's Pizzeria:
-              Where Every Slice is a Savory Symphony of Handcrafted Crust and
-              Mouthwatering Toppings, Bringing You the Ultimate Pizza
-              Experience!
+              Internal tooling system for Managers & Chefs
             </p>
           </motion.div>
           <motion.div
@@ -37,13 +36,11 @@ const LogIn = () => {
             }}
           ></motion.div>
         </div>
-        <div className=" flex justify-center">
+        <div className=" flex flex-wrap">
           <form
             className="mb-4 flex flex-col"
-            target="_blank"
+            // target="_blank"
             onSubmit={(_) => console.log}
-            method="POST"
-            action="https://formsubmit.co/ebcb4d5f8ee8dfe6d29cc3d87eb33e82"
           >
             <input
               className="placeholder-grey mt-5 rounded-md border-2 border-secondary-500 px-5 py-3"
@@ -57,10 +54,20 @@ const LogIn = () => {
             />
             <button
               type="submit"
-              className="mt-5 w-full rounded-md bg-secondary-400 px-4  py-2"
+              className={
+                'hover:text-blacks mt-5 items-center rounded-md bg-secondary-400 px-10 py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:bg-primary-500 hover:delay-150'
+              }
             >
               SUBMIT
             </button>
+            <Link
+              to="/"
+              className="wrap text-primary-500' : ''} text-s mt-5
+        flex transition duration-500 hover:text-primary-300"
+            >
+              <ArrowLeftIcon className="h-6 w-6" />
+              Home
+            </Link>
           </form>
         </div>
       </motion.div>

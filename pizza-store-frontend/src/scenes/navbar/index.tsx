@@ -5,6 +5,7 @@ import Link from './Link';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Fragment, useState } from 'react';
 import ActionButton from '@/shared/ActionButton';
+import LinkButton from '@/shared/LinkButton';
 
 type Props = {
   isTopOfPage: boolean;
@@ -52,12 +53,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />
-            <ActionButton
-              setSelectedPage={setSelectedPage}
-              navAction={SelectedPage.LogIn}
-            >
-              Log In
-            </ActionButton>
+            <LinkButton link="login">Log In</LinkButton>
           </div>
         ) : (
           <button
