@@ -1,7 +1,7 @@
 import HText from '@/shared/HText';
 import { BenefitType, SelectedPage } from '@/shared/types';
 import { motion } from 'framer-motion';
-import Benefit from '../home/Benefits';
+import Benefit from './Benefits';
 import { BanknotesIcon } from '@heroicons/react/24/solid';
 import BenefitsPageGraphic from '@/assets/BenefitsPageGraphic.png';
 import {
@@ -51,7 +51,6 @@ const Benefits = ({ setSelectedPage }: Props) => {
   return (
     <section id="benefits" className="mx-auto min-h-full w-5/6 py-20">
       <motion.div
-        className="mx-auto w-5/6 items-center justify-center md:flex md:h-5/6"
         onViewportEnter={() => setSelectedPage(SelectedPage.Benefits)}
       >
         <motion.div
@@ -65,7 +64,6 @@ const Benefits = ({ setSelectedPage }: Props) => {
             visible: { opacity: 1, x: 0 },
           }}
         >
-          {' '}
           <HText>MORE THAN JUST PIZZA.</HText>
           <p className="my-5 text-sm">
             At Crusty Sam's, we go above and beyond to create a remarkable
@@ -93,59 +91,58 @@ const Benefits = ({ setSelectedPage }: Props) => {
         </motion.div>
         <div className="mt-16 items-center justify-between gap-20 md:mt-28 md:flex">
           <img
-            className="mx-auto"
+            className="mx-auto w-1/2"
             alt="benefits-page-graphic"
             src={BenefitsPageGraphic}
           />
-          <div className="relative">
-            <div className="before:content-abstractwaves before:absolute before:-left-20 before:-top-20 before:z-[1]">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5 }}
-                variants={{
-                  hidden: { opacity: 0, x: 50 },
-                  visible: { opacity: 1, x: 0 },
-                }}
-              >
-                <HText>
-                  MILLIONS OF HAPPY MEMBERS GETTING{' '}
-                  <span className="text-primary-500"></span>
-                </HText>
-              </motion.div>
-            </div>
-          </div>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            variants={{
-              hidden: { opacity: 0, x: 50 },
-              visible: { opacity: 1, x: 0 },
-            }}
-          >
-            <p className="my-5">
-              Nascetur aenean massa auctor tincidunt. Iaculis potenti amet
-              egestas ultrices consectetur adipiscing ultricies enim. Pulvinar
-              fames vitae vitae quis. Quis amet vulputate tincidunt at in nulla
-              nec. Consequat sed facilisis dui sit egestas ultrices tellus.
-              Ullamcorper arcu id pretium sapien proin integer nisl. Felis orci
-              diam odio.
-            </p>
-            <p className="mb-5">
-              Fringilla a sed at suspendisse ut enim volutpat. Rhoncus vel est
-              tellus quam porttitor. Mauris velit euismod elementum arcu neque
-              facilisi. Amet semper tortor facilisis metus nibh. Rhoncus sit
-              enim mattis odio in risus nunc.
-            </p>
-          </motion.div>
-          <div className="relative mt-16">
-            <div className="before:absolute before:-bottom-20 before:right-40 before:z-[-1] before:content-sparkles">
-              <ActionButton setSelectedPage={setSelectedPage}>
-                Join Now
-              </ActionButton>
+          <div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5 }}
+              variants={{
+                hidden: { opacity: 0, x: 50 },
+                visible: { opacity: 1, x: 0 },
+              }}
+            >
+              <HText>
+                LOVE WHAT YOU DO -
+                <span className="text-primary-500"> CRUSTY</span>
+              </HText>
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              variants={{
+                hidden: { opacity: 0, x: 50 },
+                visible: { opacity: 1, x: 0 },
+              }}
+            >
+              <p className="my-5">
+                Every day is a new opportunity to embrace the possibilities that
+                life presents. Dare to dream big, believe in yourself, and take
+                courageous steps towards your goals. Remember, within you lies
+                the strength, resilience, and creativity to overcome challenges
+                and achieve greatness. Trust in your journey, for even amidst
+                uncertainties, you have the power to create a life filled with
+                purpose, joy, and boundless fulfillment. Keep pushing forward,
+                for the world eagerly awaits the unique brilliance that only you
+                can bring
+              </p>
+              <p className="mb-5">
+                Embrace your journey, unleash your potential, and make every
+                moment count.
+              </p>
+            </motion.div>
+            <div className="relative mt-16">
+              <div className="before:absolute before:-bottom-20 before:right-40 before:z-[-1] before:content-sparkles">
+                <ActionButton setSelectedPage={setSelectedPage}>
+                  Join Now
+                </ActionButton>
+              </div>
             </div>
           </div>
         </div>
