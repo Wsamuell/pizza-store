@@ -1,43 +1,19 @@
-import NavBar from '@/scenes/navbar';
-import { useEffect, useState } from 'react';
-import { SelectedPage } from './shared/types';
-import Home from '@/scenes/home';
-import Benefits from './scenes/benefits';
-import ContactUs from './scenes/contact';
-import Footer from './scenes/footer/footer';
+// import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import NoPage from './pages/NoPage';
+import LogIn from './pages/Login';
 
 function App() {
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(
-    SelectedPage.Home
-  );
-  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setIsTopOfPage(true);
-        setSelectedPage(SelectedPage.Home);
-      } else {
-        setIsTopOfPage(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="app bg-gray-20">
-      <NavBar
-        isTopOfPage={isTopOfPage}
-        selectedPage={selectedPage}
-        setSelectedPage={setSelectedPage}
-      />
-      <Home setSelectedPage={setSelectedPage} />
-      <Benefits setSelectedPage={setSelectedPage} />
-      <ContactUs setSelectedPage={setSelectedPage} />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route path="login" element={<LogIn />} />
+        {/* <Route path="contact" element={<Contact />} /> */}
+        <Route path="*" element={<NoPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

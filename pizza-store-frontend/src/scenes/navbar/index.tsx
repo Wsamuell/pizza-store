@@ -52,7 +52,10 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />
-            <ActionButton setSelectedPage={setSelectedPage}>
+            <ActionButton
+              setSelectedPage={setSelectedPage}
+              navAction={SelectedPage.LogIn}
+            >
               Log In
             </ActionButton>
           </div>
