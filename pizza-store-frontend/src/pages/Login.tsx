@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Logo from '@/assets/Logo.png';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import LinkButton from '@/shared/LinkButton';
 
 const LogIn = () => {
   return (
@@ -36,39 +37,22 @@ const LogIn = () => {
             }}
           ></motion.div>
         </div>
-        <div className=" flex flex-wrap">
-          <form
-            className="mb-4 flex flex-col"
-            // target="_blank"
-            onSubmit={(_) => console.log}
-          >
-            <input
-              className="placeholder-grey mt-5 rounded-md border-2 border-secondary-500 px-5 py-3"
-              typeof="text"
-              placeholder="User Name"
-            />
-            <input
-              className="placeholder-grey mt-5 rounded-md border-2 border-secondary-500 px-5 py-3"
-              typeof="text"
-              placeholder="Password"
-            />
-            <button
-              type="submit"
-              className={
-                'hover:text-blacks mt-5 items-center rounded-md bg-secondary-400 px-10 py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:bg-primary-500 hover:delay-150'
-              }
-            >
-              SUBMIT
-            </button>
-            <Link
-              to="/"
-              className="wrap text-primary-500' : ''} text-s mt-5
+        <div className=" flex flex-col justify-between">
+          <LinkButton link="" className="mt-5">
+            Manage Toppings
+          </LinkButton>
+          <LinkButton link="" className="mt-5">
+            Manage Pizzas
+          </LinkButton>
+
+          <Link
+            to="/"
+            className="wrap text-primary-500' : ''} text-s mt-5
         flex transition duration-500 hover:text-primary-300"
-            >
-              <ArrowLeftIcon className="h-6 w-6" />
-              Home
-            </Link>
-          </form>
+          >
+            <ArrowLeftIcon className="h-6 w-6" />
+            Home
+          </Link>
         </div>
       </motion.div>
     </section>

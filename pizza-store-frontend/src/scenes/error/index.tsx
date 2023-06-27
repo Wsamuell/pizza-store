@@ -1,6 +1,8 @@
 import { SelectedPage } from '@/shared/types';
 import ErrorImage from '@/assets/Error.png';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -26,6 +28,14 @@ const ErrorPage = ({ setSelectedPage }: Props) => {
             }}
           >
             <h1 className="mt-8 text-4xl">CRUST... NOT FOUND</h1>
+            <Link
+              to="/"
+              className="wrap text-primary-500' : ''} text-s mt-5
+        flex transition duration-500 hover:text-primary-300"
+            >
+              <ArrowLeftIcon className="h-6 w-6" />
+              Home
+            </Link>
           </motion.div>
           <motion.div
             className="mt-8 flex items-center gap-8"
