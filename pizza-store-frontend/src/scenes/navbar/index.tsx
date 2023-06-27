@@ -4,7 +4,7 @@ import Logo from '@/assets/Logo.png';
 import Link from './Link';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Fragment, useState } from 'react';
-import ActionButton from '@/shared/ActionButton';
+import { Link as RouteLink } from 'react-router-dom';
 import LinkButton from '@/shared/LinkButton';
 
 type Props = {
@@ -92,6 +92,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />
+            <RouteLink to="login">Log In</RouteLink>
           </div>
         </div>
       )}
