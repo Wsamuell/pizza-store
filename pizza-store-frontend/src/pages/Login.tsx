@@ -38,10 +38,10 @@ const LogIn = () => {
           ></motion.div>
         </div>
         <div className=" flex flex-col justify-between">
-          <LinkButton link="" className="mt-5">
+          <LinkButton link="toppings" className="mt-5">
             Manage Toppings
           </LinkButton>
-          <LinkButton link="" className="mt-5">
+          <LinkButton link="pizzas" className="mt-5">
             Manage Pizzas
           </LinkButton>
 
