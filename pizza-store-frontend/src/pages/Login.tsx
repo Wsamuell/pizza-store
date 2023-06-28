@@ -3,7 +3,6 @@ import LogInImg from '@/assets/LogInImg.png';
 import { motion } from 'framer-motion';
 import Footer from '@/scenes/footer/footer';
 import ContactUs from '@/scenes/contact';
-import { postgrest } from '@/helpers/supabaseClient';
 import { useEffect, useState } from 'react';
 import {
   LogInStatus,
@@ -13,6 +12,7 @@ import {
   UserType,
 } from '@/helpers/types';
 import { useNavigate } from 'react-router-dom';
+import { postgrest } from '@/helpers/supabaseClient';
 
 type Props = {
   userAuthenticated: LogInStatus;
@@ -20,24 +20,20 @@ type Props = {
 };
 const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
   const navigate = useNavigate();
-  const [hasNavigated, setHasNavigated] = useState(false);
-  useEffect(() => {
-    const getUserAuthenticated = localStorage.getItem('userAuthenticated');
-    const userType = localStorage.getItem('userType');
+  // const [hasNavigated, setHasNavigated] = useState(false);
+  // const getUserAuthenticated = localStorage.getItem('userAuthenticated');
+  // const userType = localStorage.getItem('userType');
+  // if (getUserAuthenticated === LogInStatus.Success && userType) {
+  //   const route =
+  //     userType === UserType.Chef
+  //       ? UserPrivateRoute.Chef
+  //       : UserPrivateRoute.Owner;
+  //   navigate(route);
+  // }
 
-    if (
-      !hasNavigated &&
-      getUserAuthenticated === LogInStatus.Success &&
-      userType
-    ) {
-      const route =
-        userType === UserType.Chef
-          ? UserPrivateRoute.Chef
-          : UserPrivateRoute.Owner;
-      navigate(route);
-      setHasNavigated(true);
-    }
-  }, [hasNavigated, navigate]);
+  // useEffect(() => {
+  //   navToRoute();
+  // }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -121,6 +117,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
                     <input
                       type="text"
                       name="userNameInput"
+                      value={userNameInput}
                       className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
                       placeholder="Chef | Owner"
                       onChange={(e) => setUserNameInput(e.target.value)}
@@ -135,6 +132,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
                       name="password"
                       id="password"
                       placeholder="••••••••"
+                      value={passWordInput}
                       className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900  sm:text-sm"
                       onChange={(e) => setPassWordInput(e.target.value)}
                     />
