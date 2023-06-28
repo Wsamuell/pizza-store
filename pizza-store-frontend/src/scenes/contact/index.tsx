@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { SelectedPage } from '@/shared/types';
+import { SelectedPage } from '@/helpers/types';
 import { motion } from 'framer-motion';
 import ContactUsPageGraphic from '@/assets/ContactUsPageGraphic.png';
-import HText from '@/shared/HText';
+import HText from '@/helpers/HText';
 
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
@@ -59,85 +59,82 @@ const ContactUs = ({ setSelectedPage }: Props) => {
             }}
           >
             <form
-              className='mb-4" rounded bg-white p-3 shadow-md'
+              className="mb-4 rounded-lg bg-white p-3 shadow"
               target="_blank"
               onSubmit={onSubmit}
               method="POST"
               action="https://formsubmit.co/ebcb4d5f8ee8dfe6d29cc3d87eb33e82"
             >
-              <div className="flex w-full flex-wrap justify-between">
-                <div className="flex-col">
-                  <input
-                    className="placeholder-grey mt-5 rounded-md border-2 border-secondary-500 px-5 py-3"
-                    typeof="text"
-                    placeholder="First Name"
-                    {...register('firstName', {
-                      required: true,
-                      maxLength: 30,
-                    })}
-                  />
-                  {errors.firstName && (
-                    <p className="mt-1 text-xs text-rose-500">
-                      {errors.firstName.type === 'required' &&
-                        'Please enter First Name'}
-                      {errors.firstName.type === 'maxLength' &&
-                        'Max Character limit: 30'}
-                    </p>
-                  )}
-                </div>
-                <div className="flex-col">
-                  <input
-                    className="placeholder-grey mt-5 rounded-md border-2 border-secondary-500 px-5 py-3"
-                    typeof="text"
-                    placeholder="Last Name"
-                    {...register('lastName', {
-                      required: true,
-                      maxLength: 30,
-                    })}
-                  />
-                  {errors.lastName && (
-                    <p className="mt-1 text-xs text-rose-500">
-                      {errors.lastName.type === 'required' &&
-                        'Please enter Last Name'}
-                      {errors.lastName.type === 'maxLength' &&
-                        'Max Character limit: 30'}
-                    </p>
-                  )}
-                </div>
+              <h1 className="text-center text-xl font-bold leading-tight tracking-tight text-gray-500 md:text-2xl">
+                Lets get you connected!
+              </h1>
+              <div className="mt-4">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
+                  Name
+                </label>
+                <input
+                  className="focus:ring-primary-600 focus:border-primary-600  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+                  typeof="text"
+                  placeholder="Samuel L. Jackson"
+                  {...register('name', {
+                    required: true,
+                    maxLength: 30,
+                  })}
+                />
+                {errors.name && (
+                  <p className="mt-1 text-xs text-rose-500">
+                    {errors.name.type === 'required' &&
+                      'Please enter First Name'}
+                    {errors.name.type === 'maxLength' &&
+                      'Max Character limit: 30'}
+                  </p>
+                )}
               </div>
-              <input
-                className="placeholder-grey mt-5 w-full rounded-md border-2 border-secondary-500 px-5 py-3"
-                typeof="text"
-                placeholder="Email"
-                {...register('email', {
-                  required: true,
-                  maxLength: 100,
-                  pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                })}
-              />
+
+              <div className="mt-4">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
+                  Email
+                </label>
+                <input
+                  className="focus:ring-primary-600 focus:border-primary-600  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+                  typeof="text"
+                  placeholder="Email@gmail.com"
+                  {...register('email', {
+                    required: true,
+                    maxLength: 100,
+                    pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  })}
+                />
+              </div>
               {errors.email && (
                 <p className="mt-1 text-xs text-rose-500">
                   {errors.email.type === 'required' && 'Please enter email'}
                   {errors.email.type === 'pattern' && 'Invalid email provided'}
                 </p>
               )}
-              <textarea
-                className="placeholder-grey mt-5 w-full rounded-md border-2 border-secondary-500 px-5 py-3"
-                placeholder="Message"
-                rows={4}
-                cols={50}
-                {...register('message', {
-                  required: true,
-                  maxLength: 2000,
-                })}
-              />
-              {errors.message && (
-                <p className="mt-1 text-xs text-rose-500">
-                  {errors.message.type === 'required' && 'Please enter Message'}
-                  {errors.message.type === 'maxLength' &&
-                    'Max Character limit: 30'}
-                </p>
-              )}
+              <div className="mt-4">
+                <label className="mb-2 block text-sm font-medium text-gray-500">
+                  Email
+                </label>
+                <textarea
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+                  placeholder="Message"
+                  rows={4}
+                  cols={50}
+                  {...register('message', {
+                    required: true,
+                    maxLength: 2000,
+                  })}
+                />
+                {errors.message && (
+                  <p className="mt-1 text-xs text-rose-500">
+                    {errors.message.type === 'required' &&
+                      'Please enter Message'}
+                    {errors.message.type === 'maxLength' &&
+                      'Max Character limit: 30'}
+                  </p>
+                )}
+              </div>
               <button
                 type="submit"
                 className="mt-5 w-full rounded-md bg-secondary-400 px-4  py-2"

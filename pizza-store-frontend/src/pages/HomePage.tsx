@@ -1,6 +1,6 @@
 import NavBar from '@/scenes/navbar';
 import { useEffect, useState } from 'react';
-import { SelectedPage } from '@/shared/types';
+import { SelectedPage } from '@/helpers/types';
 import Home from '@/scenes/home';
 import Benefits from '@/scenes/benefits';
 import ContactUs from '@/scenes/contact';

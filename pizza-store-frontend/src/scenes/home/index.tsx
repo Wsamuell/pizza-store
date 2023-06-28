@@ -1,4 +1,4 @@
-import { SelectedPage } from '@/shared/types';
+import { SelectedPage } from '@/helpers/types';
 import HomePageText from '@/assets/HomePageText.png';
 import HomePageGraphic from '@/assets/HomePageGraphic.png';
 import AnchorLink from 'react-anchor-link-smooth-scroll';

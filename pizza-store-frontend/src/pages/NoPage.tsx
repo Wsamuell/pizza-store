@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SelectedPage } from '@/shared/types';
+import { SelectedPage } from '@/helpers/types';
 import ErrorPage from '@/scenes/error';
 
 const NoPage = () => {

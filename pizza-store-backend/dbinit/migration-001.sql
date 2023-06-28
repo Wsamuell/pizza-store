@@ -29,8 +29,15 @@ CREATE TABLE IF NOT EXISTS public.pizza_with_topping (
 	toppings_id INT REFERENCES public.toppings(id),
 	created_at TIMESTAMP DEFAULT current_timestamp
 );
+CREATE TABLE IF NOT EXISTS public.users (
+	id SERIAL PRIMARY KEY,
+	user_name text,
+	password text,
+	created_at TIMESTAMP DEFAULT current_timestamp
+);
 
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.users TO authenticator;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.toppings TO authenticator;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.pizza TO authenticator;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.pizza_with_topping TO authenticator;
@@ -65,6 +72,9 @@ INSERT INTO public.pizza (name)
 
 INSERT INTO public.pizza_with_topping (pizza_id, toppings_id)
 		VALUES(2, 19), (3, 4), (3, 19), (1, 19), (1, 1), (1, 16);
+
+INSERT into public.users(user_name, password)
+VALUES('Chef', 'StrongMind'),('Owner', 'StrongMind');
 
 CREATE OR REPLACE FUNCTION public.get_pizza_toppings (pizza_name text)
 	RETURNS TABLE (

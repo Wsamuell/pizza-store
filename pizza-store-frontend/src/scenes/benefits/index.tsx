@@ -1,5 +1,5 @@
-import HText from '@/shared/HText';
-import { BenefitType, SelectedPage } from '@/shared/types';
+import HText from '@/helpers/HText';
+import { BenefitType, SelectedPage } from '@/helpers/types';
 import { motion } from 'framer-motion';
 import Benefit from './Benefits';
 import { BanknotesIcon } from '@heroicons/react/24/solid';
@@ -9,7 +9,7 @@ import {
   HeartIcon,
   ShoppingBagIcon,
 } from '@heroicons/react/24/outline';
-import ActionButton from '@/shared/ActionButton';
+import ActionButton from '@/helpers/ActionButton';
 
 const container = {
   hidden: {},

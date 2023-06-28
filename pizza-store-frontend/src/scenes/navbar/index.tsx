@@ -1,11 +1,11 @@
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
-import { SelectedPage } from '@/shared/types';
+import { SelectedPage } from '@/helpers/types';
 import Logo from '@/assets/Logo.png';
 import Link from './Link';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Fragment, useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
-import LinkButton from '@/shared/LinkButton';
+import LinkButton from '@/helpers/LinkButton';
 
 type Props = {
   isTopOfPage: boolean;

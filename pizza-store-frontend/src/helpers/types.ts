@@ -10,6 +10,10 @@ export interface BenefitType {
   title: string;
   description: string;
 }
+export interface UserData {
+  user_name: string;
+  password: string;
+}
 
 export interface ClassType {
   name: string;

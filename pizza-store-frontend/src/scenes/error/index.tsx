@@ -1,4 +1,4 @@
-import { SelectedPage } from '@/shared/types';
+import { SelectedPage } from '@/helpers/types';
 import ErrorImage from '@/assets/Error.png';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
