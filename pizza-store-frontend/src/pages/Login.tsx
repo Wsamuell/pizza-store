@@ -36,6 +36,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
   // }, []);
 
   useEffect(() => {
+    // navigate(UserPrivateRoute.Owner);
     window.scrollTo(0, 0);
   }, []);
 

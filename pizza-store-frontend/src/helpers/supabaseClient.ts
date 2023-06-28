@@ -66,3 +66,21 @@ export const insertToppings = async (name: string, id: number) => {
     return null;
   }
 };
+
+export const deleteTopping = async (id: number) => {
+  try {
+    const { data, error } = await postgrest
+      .from('toppings')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error Deleting toppings:', error);
+    return null;
+  }
+};

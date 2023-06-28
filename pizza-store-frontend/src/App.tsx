@@ -16,9 +16,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/toppings" element={<ManageToppings />} />
         {userAuthenticated === LogInStatus.Success ? (
           <>
-            <Route path="/toppings" element={<ManageToppings />} />
             <Route path="/pizza" element={<ManagePizza />} />
           </>
         ) : (

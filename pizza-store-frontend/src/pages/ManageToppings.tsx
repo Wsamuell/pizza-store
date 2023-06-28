@@ -1,34 +1,55 @@
-import { getAllToppings, insertToppings } from '@/helpers/supabaseClient';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import {
+  deleteTopping,
+  getAllToppings,
+  insertToppings,
+} from '@/helpers/supabaseClient';
+import { Topping } from '@/helpers/types';
+import Footer from '@/scenes/footer/footer';
 
-type Props = {};
-interface Topping {
-  id: number;
-  name: string;
-}
-
-const ManageToppings = (props: Props) => {
+const ManageToppings: React.FC = () => {
   const [toppings, setToppings] = useState<Topping[]>([]);
   const [name, setName] = useState('');
-  const disabledStyle = name === '' ? 'opacity-25' : 'opacity-100';
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     console.log(name, toppings.length + 1);
-    console.log(setToppings);
-    insertToppings(name, toppings.length + 1);
+
+    try {
+      const newTopping = await insertToppings(name, toppings.length + 1);
+      setToppings((prevToppings) => [...prevToppings, newTopping]);
+      console.log('Topping inserted successfully.');
+    } catch (error) {
+      console.error('Error adding new topping:', error);
+    }
   };
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteTopping(id);
+      setToppings((prevToppings) =>
+        prevToppings.filter((topping) => topping.id !== id)
+      );
+      console.log('Topping deleted successfully.');
+    } catch (error) {
+      console.error('Error deleting topping:', error);
+    }
+  };
+
   useEffect(() => {
-    getAllToppings().then((retrievedToppings) => {
+    const fetchToppings = async () => {
+      const retrievedToppings = await getAllToppings();
       if (retrievedToppings) {
         setToppings(retrievedToppings);
       } else {
         console.log('Failed to retrieve toppings.');
       }
-    });
+    };
+
+    fetchToppings();
   }, []);
 
   return (
@@ -47,7 +68,9 @@ const ManageToppings = (props: Props) => {
         />
         <button
           type="submit"
-          className={`hover:bg-primary-700  rounded-lg bg-secondary-500 px-5 py-2.5 text-center text-sm font-medium text-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-300 ${disabledStyle}`}
+          className={`hover:bg-primary-700 rounded-lg bg-secondary-500 px-5 py-2.5 text-center text-sm font-medium text-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-300 ${
+            name === '' ? 'opacity-25' : ''
+          }`}
           disabled={name === ''}
         >
           Insert Pizza
@@ -55,8 +78,13 @@ const ManageToppings = (props: Props) => {
       </form>
 
       {toppings.map((topping) => (
-        <div key={topping.id}>{topping.name}</div>
+        <div key={topping.id}>
+          <p>{topping.name}</p>
+          <button onClick={() => handleDelete(topping.id)}>Delete</button>
+          {/* <button onClick={() => handleUpdate(topping)}>Update</button> */}
+        </div>
       ))}
+      <Footer />
     </div>
   );
 };

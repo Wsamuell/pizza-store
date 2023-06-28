@@ -19,6 +19,10 @@ export enum UserPrivateRoute {
   Chef = '/pizza',
   Owner = '/toppings',
 }
+export interface Topping {
+  id: number;
+  name: string;
+}
 
 export interface BenefitType {
   icon: JSX.Element;
