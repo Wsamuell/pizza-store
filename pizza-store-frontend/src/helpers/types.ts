@@ -4,6 +4,21 @@ export enum SelectedPage {
   LogIn = 'login',
   ContactUs = 'contactus',
 }
+export enum LogInStatus {
+  Success = 'sucess',
+  Pending = 'pending',
+  Failed = 'failed',
+}
+
+export enum UserType {
+  Chef = 'Chef',
+  Owner = 'Owner',
+}
+
+export enum UserPrivateRoute {
+  Chef = '/pizza',
+  Owner = '/toppings',
+}
 
 export interface BenefitType {
   icon: JSX.Element;

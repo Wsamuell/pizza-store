@@ -1,22 +1,46 @@
-import { Link } from 'react-router-dom';
 import Logo from '@/assets/Logo.png';
 import LogInImg from '@/assets/LogInImg.png';
 import { motion } from 'framer-motion';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import LinkButton from '@/helpers/LinkButton';
 import Footer from '@/scenes/footer/footer';
 import ContactUs from '@/scenes/contact';
 import { postgrest } from '@/helpers/supabaseClient';
-import { useState } from 'react';
-import { SelectedPage, UserData } from '@/helpers/types';
+import { useEffect, useState } from 'react';
+import {
+  LogInStatus,
+  SelectedPage,
+  UserData,
+  UserPrivateRoute,
+  UserType,
+} from '@/helpers/types';
+import { useNavigate } from 'react-router-dom';
 
-const LogIn = () => {
-  const [loginStatus, setLoginStatus] = useState('');
+type Props = {
+  userAuthenticated: LogInStatus;
+  setUserAuthenticated: (value: LogInStatus) => void;
+};
+const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userAuthenticated = localStorage.getItem('userAuthenticated');
+    const userType = localStorage.getItem('user');
+
+    if (userAuthenticated === LogInStatus.Success && userType) {
+      const route =
+        userType === UserType.Chef
+          ? UserPrivateRoute.Chef
+          : UserPrivateRoute.Owner;
+      navigate(route);
+    }
+
+    window.scrollTo(0, 0);
+  }, []);
+
   const [_selectedPage, setSelectedPage] = useState<SelectedPage>(
-    SelectedPage.ContactUs
+    SelectedPage.Home
   );
-  const [userNameInput, setUserNameInput] = useState('');
-  const [passWordInput, setPassWordInput] = useState('');
+  const [userNameInput, setUserNameInput] = useState<string>('');
+  const [passWordInput, setPassWordInput] = useState<string>('');
   const isDisabled = userNameInput === '' || passWordInput === '';
   const disabledStyle = isDisabled ? 'opacity-25' : 'opacity-100';
   const login = async () => {
@@ -28,9 +52,16 @@ const LogIn = () => {
     const user = data?.[0] as UserData | null;
 
     if (user?.user_name === userNameInput && user?.password === passWordInput) {
-      console.log('We are ago');
+      setUserAuthenticated(LogInStatus.Success);
+      const route =
+        user?.user_name === UserType.Chef
+          ? UserPrivateRoute.Chef
+          : UserPrivateRoute.Owner;
+      localStorage.setItem('userAuthenticated', LogInStatus.Success);
+      localStorage.setItem('user', user?.user_name);
+      navigate(route);
     } else {
-      setLoginStatus('failed');
+      setUserAuthenticated(LogInStatus.Failed);
     }
   };
   return (
@@ -100,7 +131,7 @@ const LogIn = () => {
                       className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900  sm:text-sm"
                       onChange={(e) => setPassWordInput(e.target.value)}
                     />
-                    {loginStatus === 'failed' && (
+                    {userAuthenticated === LogInStatus.Failed && (
                       <p className="mt-1 text-xs text-rose-500">
                         Invalid User Credentials
                       </p>
@@ -137,11 +168,11 @@ const LogIn = () => {
           </motion.div>
         </div>
       </motion.div>
-      {/* BKMRK: Come back to add comtact info */}
       <ContactUs setSelectedPage={setSelectedPage} />
       <Footer />
     </section>
   );
+  // };
 };
 
 export default LogIn;

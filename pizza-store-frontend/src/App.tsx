@@ -1,19 +1,38 @@
-// import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import NoPage from './pages/NoPage';
 import LogIn from './pages/Login';
 import ManageToppings from './pages/ManageToppings';
 import ManagePizza from './pages/ManagePizza';
+import { LogInStatus } from '@/helpers/types';
+import { useState } from 'react';
 
 function App() {
+  const [userAuthenticated, setUserAuthenticated] = useState<LogInStatus>(
+    LogInStatus.Pending
+  );
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<HomePage />} />
-        <Route path="login" element={<LogIn />} />
-        <Route path="toppings" element={<ManageToppings />} />
-        <Route path="pizza" element={<ManagePizza />} />
+        <Route path="/" element={<HomePage />} />
+        {userAuthenticated === LogInStatus.Success ? (
+          <>
+            <Route path="/toppings" element={<ManageToppings />} />
+            <Route path="/pizza" element={<ManagePizza />} />
+          </>
+        ) : (
+          <Route path="/*" element={<Navigate to="/login" />} />
+        )}
+        <Route
+          path="/login"
+          element={
+            <LogIn
+              userAuthenticated={userAuthenticated}
+              setUserAuthenticated={setUserAuthenticated}
+            />
+          }
+        />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
