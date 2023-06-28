@@ -20,19 +20,26 @@ type Props = {
 };
 const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
   const navigate = useNavigate();
-
+  const [hasNavigated, setHasNavigated] = useState(false);
   useEffect(() => {
-    const userAuthenticated = localStorage.getItem('userAuthenticated');
-    const userType = localStorage.getItem('user');
+    const getUserAuthenticated = localStorage.getItem('userAuthenticated');
+    const userType = localStorage.getItem('userType');
 
-    if (userAuthenticated === LogInStatus.Success && userType) {
+    if (
+      !hasNavigated &&
+      getUserAuthenticated === LogInStatus.Success &&
+      userType
+    ) {
       const route =
         userType === UserType.Chef
           ? UserPrivateRoute.Chef
           : UserPrivateRoute.Owner;
       navigate(route);
+      setHasNavigated(true);
     }
+  }, [hasNavigated, navigate]);
 
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -58,7 +65,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
           ? UserPrivateRoute.Chef
           : UserPrivateRoute.Owner;
       localStorage.setItem('userAuthenticated', LogInStatus.Success);
-      localStorage.setItem('user', user?.user_name);
+      localStorage.setItem('userType', user?.user_name);
       navigate(route);
     } else {
       setUserAuthenticated(LogInStatus.Failed);
