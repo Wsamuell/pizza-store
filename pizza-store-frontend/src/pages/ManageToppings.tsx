@@ -33,6 +33,9 @@ const ManageToppings: React.FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (toppings.some((item) => item.name === newTopping.name)) {
+      return;
+    }
 
     try {
       await insertToppings(newTopping.name, newTopping.id);
@@ -54,6 +57,9 @@ const ManageToppings: React.FC = () => {
     }
   };
   const handleUpdate = async (id: number, name: string) => {
+    if (toppings.some((item) => item.name === name)) {
+      return;
+    }
     try {
       await updateTopping(name, id);
       const updatedToppings = toppings.map((topping) =>

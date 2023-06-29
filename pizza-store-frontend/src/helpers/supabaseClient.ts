@@ -139,16 +139,17 @@ export const updatePizza = async (name: string, id: number) => {
 
 // Toppings To Pizza: BKMRK: needs work
 
-export const getAllToppingsOnPizza = async () => {
+export const getAllToppingsOnPizza = async (id: number) => {
   try {
     const { data, error } = await postgrest
       .from('pizza_with_topping')
-      .select('*');
+      .select('toppings(name)')
+      .eq('pizza_id', id);
 
     if (error) {
       throw new Error(error.message);
     }
-
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error retrieving toppings:', error);
