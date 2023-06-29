@@ -3,6 +3,7 @@ import {
   deleteTopping,
   getAllToppings,
   insertToppings,
+  updateTopping,
 } from '@/helpers/supabaseClient';
 import { Topping } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
@@ -14,6 +15,17 @@ const ManageToppings: React.FC = () => {
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
+  const handleToppingNameChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => {
+    const { value } = event.target;
+    setToppings((prevToppings) =>
+      prevToppings.map((topping) =>
+        topping.id === id ? { ...topping, name: value } : topping
+      )
+    );
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -21,8 +33,12 @@ const ManageToppings: React.FC = () => {
 
     try {
       const newTopping = await insertToppings(name, toppings.length + 1);
-      setToppings((prevToppings) => [...prevToppings, newTopping]);
-      console.log('Topping inserted successfully.');
+      if (newTopping !== null) {
+        setToppings((prevToppings) => [...prevToppings, newTopping]);
+        console.log('Topping inserted successfully.');
+      } else {
+        console.log('Failed to add new topping.');
+      }
     } catch (error) {
       console.error('Error adding new topping:', error);
     }
@@ -36,6 +52,19 @@ const ManageToppings: React.FC = () => {
       console.log('Topping deleted successfully.');
     } catch (error) {
       console.error('Error deleting topping:', error);
+    }
+  };
+  const handleUpdate = async (id: number, name: string) => {
+    try {
+      await updateTopping(name, id);
+      const updatedToppings = toppings.map((topping) =>
+        topping.id === id ? { ...topping, name: name } : topping
+      );
+
+      setToppings(updatedToppings);
+      console.log('Topping updated successfully.');
+    } catch (error) {
+      console.error('Error updating topping:', error);
     }
   };
 
@@ -61,7 +90,7 @@ const ManageToppings: React.FC = () => {
         <input
           type="text"
           name="userNameInput"
-          className="focus:ring-primary-600 focus:border-primary-600 w block w-1/2 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+          className=" focus:ring-primary-600 focus:border-primary-600 w block w-1/2 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
           placeholder="Sam's Special"
           onChange={handleNameChange}
           value={name}
@@ -78,10 +107,25 @@ const ManageToppings: React.FC = () => {
       </form>
 
       {toppings.map((topping) => (
-        <div key={topping.id}>
-          <p>{topping.name}</p>
-          <button onClick={() => handleDelete(topping.id)}>Delete</button>
-          {/* <button onClick={() => handleUpdate(topping)}>Update</button> */}
+        <div key={topping.id} className="flex items-center px-8 py-4">
+          <input
+            type="text"
+            value={topping.name}
+            onChange={(event) => handleToppingNameChange(event, topping.id)}
+            className="focus:ring-primary-600 focus:border-primary-600 w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+          />
+          <button
+            onClick={() => handleDelete(topping.id)}
+            className="rounded-xl bg-red-500 px-2 py-1 font-medium text-white hover:bg-red-900"
+          >
+            Remove
+          </button>
+          <button
+            onClick={() => handleUpdate(topping.id, topping.name)}
+            className="rounded-xl bg-secondary-500 px-2 py-1 font-medium text-white hover:bg-red-900"
+          >
+            Update
+          </button>
         </div>
       ))}
       <Footer />
