@@ -1,18 +1,18 @@
 import {
   deletePizza,
   getAllPizza,
-  getAllToppingsOnPizza,
+  // getAllToppingsOnPizza,
   insertPizza,
   updatePizza,
 } from '@/helpers/supabaseClient';
-import { Pizza, Topping } from '@/helpers/types';
+import { Pizza } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 const ManagePizza = () => {
   const [pizza, setPizza] = useState<Pizza[]>([]);
   const [name, setName] = useState('');
-  const [toppings, setToppings] = useState([]);
+  // const [toppings, setToppings] = useState([]);
 
   const newPizza: Pizza = {
     id: pizza.length + 1,
@@ -58,9 +58,6 @@ const ManagePizza = () => {
     }
   };
   const handleUpdate = async (id: number, name: string) => {
-    if (pizza.some((item) => item.name === name)) {
-      return;
-    }
     try {
       await updatePizza(name, id);
       const updatedPizza = pizza.map((pie) =>
@@ -73,20 +70,20 @@ const ManagePizza = () => {
       console.error('Error updating Pizza:', error);
     }
   };
-  const handleGetToppingsOnPizza = async (id: number) => {
-    try {
-      const toppingsList = await getAllToppingsOnPizza(id);
-      if (toppingsList) {
-        console.log(toppingsList.map((item) => item.toppings));
-        // console.log(toppingsList.map(topping: Topping) => topping.name);
-        // setToppings(toppingsList.map((item) => item.toppings));
-      } else {
-        console.log('Failed to retrieve ToppingsOnPizza.');
-      }
-    } catch (error) {
-      console.error('Error retrieving ToppingsOnPizza:', error);
-    }
-  };
+  // const handleGetToppingsOnPizza = async (id: number) => {
+  //   try {
+  //     const toppingsList = await getAllToppingsOnPizza(id);
+  //     if (toppingsList) {
+  //       console.log(toppingsList.map((item) => item.toppings));
+  //       // console.log(toppingsList.map(topping: Topping) => topping.name);
+  //       // setToppings(toppingsList.map((item) => item.toppings));
+  //     } else {
+  //       console.log('Failed to retrieve ToppingsOnPizza.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error retrieving ToppingsOnPizza:', error);
+  //   }
+  // };
   // handleGetToppingsOnPizza(1);
   useEffect(() => {
     getAllPizza().then((retrievedPizza) => {
@@ -140,7 +137,7 @@ const ManagePizza = () => {
             Remove
           </button>
           <button
-            onClick={() => handleUpdate(pie.id, pie.name)}
+            onClick={() => handleUpdate(pie.id, pie.name.trim())}
             className="rounded-xl bg-secondary-500 px-2 py-1 font-medium text-white hover:bg-red-900"
           >
             Update

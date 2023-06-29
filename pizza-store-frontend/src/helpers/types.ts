@@ -4,10 +4,16 @@ export enum SelectedPage {
   LogIn = 'login',
   ContactUs = 'contactus',
 }
+
 export enum LogInStatus {
-  Success = 'sucess',
+  Success = 'success',
   Pending = 'pending',
   Failed = 'failed',
+}
+export enum toLogInStatus {
+  'success' = LogInStatus.Success,
+  'pending' = LogInStatus.Pending,
+  'failed' = LogInStatus.Failed,
 }
 
 export enum UserType {

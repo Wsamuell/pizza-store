@@ -33,6 +33,7 @@ const ManageToppings: React.FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    newTopping.name = newTopping.name.trim();
     if (toppings.some((item) => item.name === newTopping.name)) {
       return;
     }
@@ -40,7 +41,6 @@ const ManageToppings: React.FC = () => {
     try {
       await insertToppings(newTopping.name, newTopping.id);
       setToppings([...toppings, newTopping]);
-      console.log('Failed to add new topping.');
     } catch (error) {
       console.error('Error adding new topping:', error);
     }
@@ -57,9 +57,6 @@ const ManageToppings: React.FC = () => {
     }
   };
   const handleUpdate = async (id: number, name: string) => {
-    if (toppings.some((item) => item.name === name)) {
-      return;
-    }
     try {
       await updateTopping(name, id);
       const updatedToppings = toppings.map((topping) =>
@@ -126,7 +123,7 @@ const ManageToppings: React.FC = () => {
             Remove
           </button>
           <button
-            onClick={() => handleUpdate(topping.id, topping.name)}
+            onClick={() => handleUpdate(topping.id, topping.name.trim())}
             className="rounded-xl bg-secondary-500 px-2 py-1 font-medium text-white hover:bg-red-900"
           >
             Update

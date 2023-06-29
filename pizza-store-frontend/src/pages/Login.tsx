@@ -19,24 +19,20 @@ type Props = {
   setUserAuthenticated: (value: LogInStatus) => void;
 };
 const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
-  const navigate = useNavigate();
-  // const [hasNavigated, setHasNavigated] = useState(false);
-  // const getUserAuthenticated = localStorage.getItem('userAuthenticated');
-  // const userType = localStorage.getItem('userType');
-  // if (getUserAuthenticated === LogInStatus.Success && userType) {
-  //   const route =
-  //     userType === UserType.Chef
-  //       ? UserPrivateRoute.Chef
-  //       : UserPrivateRoute.Owner;
-  //   navigate(route);
-  // }
+  const getUserAuthenticated = localStorage.getItem('userAuthenticated');
 
-  // useEffect(() => {
-  //   navToRoute();
-  // }, []);
+  const navigate = useNavigate();
+
+  const userType = localStorage.getItem('userType');
+  const route =
+    userType === UserType.Chef ? UserPrivateRoute.Chef : UserPrivateRoute.Owner;
+  useEffect(() => {
+    if (userAuthenticated === LogInStatus.Success && userType) {
+      navigate(route);
+    }
+  }, [userAuthenticated, userType]);
 
   useEffect(() => {
-    // navigate(UserPrivateRoute.Owner);
     window.scrollTo(0, 0);
   }, []);
 
@@ -47,6 +43,12 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
   const [passWordInput, setPassWordInput] = useState<string>('');
   const isDisabled = userNameInput === '' || passWordInput === '';
   const disabledStyle = isDisabled ? 'opacity-25' : 'opacity-100';
+  if (getUserAuthenticated === LogInStatus.Success) {
+    setUserAuthenticated(LogInStatus.Success);
+    navigate(route);
+    console.log('I got here');
+    // reRoute(navigate);
+  }
   const login = async () => {
     const { data } = await postgrest
       .from('users')
@@ -57,13 +59,9 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
 
     if (user?.user_name === userNameInput && user?.password === passWordInput) {
       setUserAuthenticated(LogInStatus.Success);
-      const route =
-        user?.user_name === UserType.Chef
-          ? UserPrivateRoute.Chef
-          : UserPrivateRoute.Owner;
       localStorage.setItem('userAuthenticated', LogInStatus.Success);
       localStorage.setItem('userType', user?.user_name);
-      navigate(route);
+      // reRoute(navigate);
     } else {
       setUserAuthenticated(LogInStatus.Failed);
     }

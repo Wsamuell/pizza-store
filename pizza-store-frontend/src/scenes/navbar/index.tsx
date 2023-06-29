@@ -53,6 +53,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
             />
+
             <LinkButton link="login">Log In</LinkButton>
           </div>
         ) : (
