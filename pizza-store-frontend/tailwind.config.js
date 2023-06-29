@@ -23,13 +23,6 @@ export default {
         dmsans: ['DM Sans', 'san-serif'],
         montserrat: ['Montserrat', 'san-serif'],
       },
-      // BKMRK: Might need to Nuke this
-      content: {
-        evolvetext: "url('./assets/')",
-        chilli: "url('./assets/chilli-pepper.png')",
-        sparkles: "url('./assets/Sparkles.png')",
-        circles: "url('./assets/Circles.png')",
-      },
       screens: {
         xs: '480px',
         sm: '768px',

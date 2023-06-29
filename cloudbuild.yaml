@@ -5,10 +5,6 @@ steps:
     args: ['install']
   - name: 'node'
     entrypoint: 'yarn'
-    args: ['yarn', 'plugin', 'import', 'workspace-tools']
-
-  - name: 'node'
-    entrypoint: 'yarn'
     args: ['build']
-  - name: 'docker/compose:1.26.2'
+  - name: 'docker/compose'
     args: ['up', '-d']

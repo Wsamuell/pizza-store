@@ -15,6 +15,7 @@ services:
     volumes:
       - ./pizza-store-backend/dbinit:/docker-entrypoint-initdb.d
       - data:/var/lib/postgresql/data
+      - ./:/workspace
 
   postgrest:
     container_name: postgrest
@@ -30,6 +31,8 @@ services:
     ports:
       - 3000:3000
     restart: always
+    volumes:
+      - ./:/workspace
 
   # swagger:
   #   container_name: swagger

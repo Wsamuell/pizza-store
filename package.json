@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "yarn workspaces foreach run build",
+    "build": "yarn workspace pizza-store-backend run build && yarn workspace pizza-store-frontend run build",
     "build:clean": "yarn build && yarn force:restart",
     "start": "docker compose up -d",
     "force:restart": "docker compose down --volumes && docker compose up --build -d"

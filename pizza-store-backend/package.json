@@ -8,6 +8,7 @@
     "demon:watch": "nodemon dist/test.js",
     "view": "node dist/test.js",
     "watch": "tsc -w",
+    "build": "tsc",
     "force:restart:orphans": "docker compose down --volumes && docker compose up --build --remove-orphans -d",
     "force:restart": "docker compose down --volumes && docker compose up --build -d",
     "restart": "docker compose down && docker compose up -d"
