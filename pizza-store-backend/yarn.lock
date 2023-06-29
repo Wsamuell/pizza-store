@@ -1115,9 +1115,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pizza-store@workspace:.":
+"pizza-store-backend@workspace:.":
   version: 0.0.0-use.local
-  resolution: "pizza-store@workspace:."
+  resolution: "pizza-store-backend@workspace:."
   dependencies:
     "@supabase/postgrest-js": ^1.7.1
     "@types/node": ^20.3.1

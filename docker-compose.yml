@@ -6,14 +6,14 @@ services:
       - ./.env
     expose:
       - '3001'
-    image: postgres:13
+    image: postgres
     networks:
       - network
     ports:
       - 3001:5432
     restart: always
     volumes:
-      - ./dbinit:/docker-entrypoint-initdb.d
+      - ./pizza-store-backend/dbinit:/docker-entrypoint-initdb.d
       - data:/var/lib/postgresql/data
 
   postgrest:
@@ -31,20 +31,20 @@ services:
       - 3000:3000
     restart: always
 
-  swagger:
-    container_name: swagger
-    depends_on:
-      - postgrest
-    environment:
-      API_URL: http://localhost:3000/
-    expose:
-      - '3002'
-    image: swaggerapi/swagger-ui
-    networks:
-      - network
-    ports:
-      - 3002:8080
-    restart: always
+  # swagger:
+  #   container_name: swagger
+  #   depends_on:
+  #     - postgrest
+  #   environment:
+  #     API_URL: http://localhost:3000/
+  #   expose:
+  #     - '3002'
+  #   image: swaggerapi/swagger-ui
+  #   networks:
+  #     - network
+  #   ports:
+  #     - 3002:8080
+  #   restart: always
 
   app:
     container_name: app
@@ -59,7 +59,7 @@ services:
       - 80:80
     restart: always
     volumes:
-      - ./dist:/usr/share/nginx/html
+      - ./pizza-store-frontend/dist:/usr/share/nginx/html
 networks:
   network:
     driver: bridge

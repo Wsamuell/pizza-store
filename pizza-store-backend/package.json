@@ -1,5 +1,5 @@
 {
-  "name": "pizza-store",
+  "name": "pizza-store-backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
     "watch": "tsc -w",
     "force:restart:orphans": "docker compose down --volumes && docker compose up --build --remove-orphans -d",
     "force:restart": "docker compose down --volumes && docker compose up --build -d",
-    "psql:connect": "psql -h 127.0.0.1 -U postgres -p 3001 -d pizza_manager",
     "restart": "docker compose down && docker compose up -d"
   },
   "keywords": [],

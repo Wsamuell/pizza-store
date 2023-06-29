@@ -23,14 +23,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {userAuthenticated === LogInStatus.Success ? (
-          <>
-            <Route path="/pizza" element={<ManagePizza />} />
-            <Route path="/toppings" element={<ManageToppings />} />
-          </>
-        ) : (
-          <Route path="/*" element={<Navigate to="/login" />} />
-        )}
         <Route
           path="/login"
           element={
@@ -40,6 +32,14 @@ function App() {
             />
           }
         />
+        {userAuthenticated === LogInStatus.Success ? (
+          <>
+            <Route path="/pizza" element={<ManagePizza />} />
+            <Route path="/toppings" element={<ManageToppings />} />
+          </>
+        ) : (
+          <Route path="/*" element={<Navigate to="/login" />} />
+        )}
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
