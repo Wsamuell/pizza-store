@@ -4,26 +4,32 @@ import {
   insertPizza,
   updatePizza,
 } from '@/helpers/supabaseClient';
+import { Pizza } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
-type Props = {};
-
-interface Pizza {
-  id: number;
-  name: string;
-}
-const ManagePizza = (props: Props) => {
+const ManagePizza = () => {
   const [pizza, setPizza] = useState<Pizza[]>([]);
   const [name, setName] = useState('');
-  const disabledStyle = name === '' ? 'opacity-25' : 'opacity-100';
+  const newPizza: Pizza = {
+    id: pizza.length + 1,
+    name: name,
+  };
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    insertPizza(name);
+
+    try {
+      await insertPizza(newPizza.name, newPizza.id);
+      setPizza([...pizza, newPizza]);
+    } catch (error) {
+      console.error('Error adding new pizza:', error);
+    }
+
+    setName('');
   };
   const handlePizzaNameChange = (
     event: ChangeEvent<HTMLInputElement>,

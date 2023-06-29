@@ -88,10 +88,11 @@ export const getAllPizza = async () => {
     return null;
   }
 };
-
-export const insertPizza = async (name: string) => {
+export const insertPizza = async (name: string, id: number) => {
   try {
-    const { data, error } = await postgrest.from('pizzas').insert([{ name }]);
+    const { data, error } = await postgrest
+      .from('pizza')
+      .insert([{ name, id }]);
 
     if (error) {
       throw new Error(error.message);
@@ -137,6 +138,24 @@ export const updatePizza = async (name: string, id: number) => {
 };
 
 // Toppings To Pizza: BKMRK: needs work
+
+export const getAllToppingsOnPizza = async () => {
+  try {
+    const { data, error } = await postgrest
+      .from('pizza_with_topping')
+      .select('*');
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error retrieving toppings:', error);
+    return null;
+  }
+};
+
 export const insertToppingOnPizza = async (name: string) => {
   try {
     const { data, error } = await postgrest

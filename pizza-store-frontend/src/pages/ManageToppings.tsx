@@ -11,6 +11,10 @@ import Footer from '@/scenes/footer/footer';
 const ManageToppings: React.FC = () => {
   const [toppings, setToppings] = useState<Topping[]>([]);
   const [name, setName] = useState('');
+  const newTopping: Topping = {
+    id: toppings.length + 1,
+    name: name,
+  };
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -29,16 +33,11 @@ const ManageToppings: React.FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(name, toppings.length + 1);
 
     try {
-      const newTopping = await insertToppings(name, toppings.length + 1);
-      if (newTopping !== null) {
-        setToppings((prevToppings) => [...prevToppings, newTopping]);
-        console.log('Topping inserted successfully.');
-      } else {
-        console.log('Failed to add new topping.');
-      }
+      await insertToppings(newTopping.name, newTopping.id);
+      setToppings([...toppings, newTopping]);
+      console.log('Failed to add new topping.');
     } catch (error) {
       console.error('Error adding new topping:', error);
     }
