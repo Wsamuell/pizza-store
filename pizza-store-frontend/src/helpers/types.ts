@@ -29,6 +29,12 @@ export interface Topping {
   id: number;
   name: string;
 }
+
+export interface ToppingOnPizza {
+  id: number;
+  name: string;
+  pizzaId: number;
+}
 export interface Pizza {
   id: number;
   name: string;

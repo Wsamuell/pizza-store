@@ -1,4 +1,5 @@
 import { PostgrestClient } from '@supabase/postgrest-js';
+import { Topping } from './types';
 
 const REST_URL = 'http://localhost:3000';
 
@@ -143,20 +144,19 @@ export const getAllToppingsOnPizza = async (id: number) => {
   try {
     const { data, error } = await postgrest
       .from('pizza_with_topping')
-      .select('toppings(name)')
+      .select('pizza_id, toppings(id, name)')
       .eq('pizza_id', id);
 
     if (error) {
       throw new Error(error.message);
     }
-    console.log(data);
     return data;
   } catch (error) {
     console.error('Error retrieving toppings:', error);
     return null;
   }
 };
-
+// this needs to take pizza_id and topping_id
 export const insertToppingOnPizza = async (name: string) => {
   try {
     const { data, error } = await postgrest
@@ -169,17 +169,17 @@ export const insertToppingOnPizza = async (name: string) => {
 
     return data;
   } catch (error) {
-    console.error('Error inserting pizza:', error);
+    console.error('Error inserting topping:', error);
     return null;
   }
 };
 
-export const deleteToppingOnPizza = async (id: number) => {
+export const deleteAllToppingsOnPizza = async (id: number) => {
   try {
     const { data, error } = await postgrest
       .from('pizza_with_topping')
       .delete()
-      .eq('id', id);
+      .eq('pizza_id', id);
 
     if (error) {
       throw new Error(error.message);
@@ -187,7 +187,25 @@ export const deleteToppingOnPizza = async (id: number) => {
 
     return data;
   } catch (error) {
-    console.error('Error Deleting pizza:', error);
+    console.error('Error Deleting all toppings:', error);
+    return null;
+  }
+};
+export const deleteAToppingsOnPizza = async (id: number, toppingId: number) => {
+  try {
+    const { data, error } = await postgrest
+      .from('pizza_with_topping')
+      .delete()
+      .eq('pizza_id', id)
+      .eq('topping_id', toppingId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error Deleting this topping:', error);
     return null;
   }
 };

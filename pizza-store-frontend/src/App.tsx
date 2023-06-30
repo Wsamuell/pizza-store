@@ -16,9 +16,6 @@ function App() {
       ? LogInStatus.Pending
       : LogInStatus[getUserAuthenticated as keyof typeof LogInStatus]
   );
-  console.log('userAuthenticated', userAuthenticated);
-  console.log('getUserAuthenticated', getUserAuthenticated);
-
   return (
     <BrowserRouter>
       <Routes>

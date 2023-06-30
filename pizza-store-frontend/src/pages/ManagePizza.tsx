@@ -1,16 +1,19 @@
+import InputBar from '@/components/InputBar';
+import ReusableInputWithButton from '@/components/ReusableInputWithButton';
 import {
   deletePizza,
   getAllPizza,
-  // getAllToppingsOnPizza,
+  getAllToppingsOnPizza,
   insertPizza,
   updatePizza,
 } from '@/helpers/supabaseClient';
-import { Pizza } from '@/helpers/types';
+import { Pizza, Topping } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 const ManagePizza = () => {
   const [pizza, setPizza] = useState<Pizza[]>([]);
+  const [toppingsData, setToppingsData] = useState({});
   const [name, setName] = useState('');
   // const [toppings, setToppings] = useState([]);
 
@@ -70,80 +73,85 @@ const ManagePizza = () => {
       console.error('Error updating Pizza:', error);
     }
   };
-  // const handleGetToppingsOnPizza = async (id: number) => {
-  //   try {
-  //     const toppingsList = await getAllToppingsOnPizza(id);
-  //     if (toppingsList) {
-  //       console.log(toppingsList.map((item) => item.toppings));
-  //       // console.log(toppingsList.map(topping: Topping) => topping.name);
-  //       // setToppings(toppingsList.map((item) => item.toppings));
-  //     } else {
-  //       console.log('Failed to retrieve ToppingsOnPizza.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error retrieving ToppingsOnPizza:', error);
-  //   }
-  // };
-  // handleGetToppingsOnPizza(1);
-  useEffect(() => {
-    getAllPizza().then((retrievedPizza) => {
-      if (retrievedPizza) {
-        setPizza(retrievedPizza);
-      } else {
-        console.log('Failed to retrieve Pizza.');
-      }
-    });
-  }, []);
 
+  const handleGetToppingsOnPizza = async (id: number) => {
+    try {
+      const allToppings = await getAllToppingsOnPizza(id);
+      const toppingsData = allToppings?.map((a) => a);
+
+      setToppingsData((prevData) => ({ ...prevData, toppingsData }));
+    } catch (error) {
+      console.error('Error retrieving ToppingsOnPizza:', error);
+    }
+  };
+
+  // getAllToppingsOnPizza(1);
+  // on delete of pizza we want to first find all toppings and delete them
+  // useEffect(() => {
+  //   pizza.map((pie) => {
+  //     console.log('Im here');
+  //     handleGetToppingsOnPizza(pie.id);
+  //   });
+  // }, [pizza, toppingsData]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const retrievedPizza = await getAllPizza();
+        if (retrievedPizza) {
+          setPizza(retrievedPizza);
+          // retrievedPizza.forEach((pie) => {
+          //   handleGetToppingsOnPizza(pie.id);
+          // });
+        } else {
+          console.log('Failed to retrieve Pizza.');
+        }
+      } catch (error) {
+        console.error('Error retrieving Pizza:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const retrievedPizza = await getAllPizza();
+        if (retrievedPizza) {
+          setPizza(retrievedPizza);
+
+          retrievedPizza.forEach((pie) => {
+            console.log('yay');
+            handleGetToppingsOnPizza(pie.id);
+          });
+        } else {
+          console.log('Failed to retrieve Pizza.');
+        }
+      } catch (error) {
+        console.error('Error retrieving Pizza:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-wrap items-center justify-evenly p-5"
-      >
-        <input
-          type="text"
-          name="userNameInput"
-          className=" focus:ring-primary-600 focus:border-primary-600 w block w-1/2 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
-          placeholder="Sam's Special"
-          onChange={handleNameChange}
-          value={name}
+      <div>
+        <InputBar
+          handleSubmit={handleSubmit}
+          placeholder={'Add a new pizza...'}
+          handleNameChange={handleNameChange}
+          inputValue={name}
         />
-        <button
-          type="submit"
-          className={`hover:bg-primary-700 rounded-lg bg-secondary-500 px-5 py-2.5 text-center text-sm font-medium text-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-300 ${
-            name === '' ? 'opacity-25' : ''
-          }`}
-          disabled={name === ''}
-        >
-          Insert Pizza
-        </button>
-      </form>
-
-      {pizza.map((pie) => (
-        <div key={pie.id} className="flex items-center px-8 py-4">
-          <div>
-            <input
-              type="text"
-              value={pie.name}
-              onChange={(event) => handlePizzaNameChange(event, pie.id)}
-              className="focus:ring-primary-600 focus:border-primary-600 w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
-            />
-          </div>
-          <button
-            onClick={() => handleDelete(pie.id)}
-            className="rounded-xl bg-red-500 px-2 py-1 font-medium text-white hover:bg-red-900"
-          >
-            Remove
-          </button>
-          <button
-            onClick={() => handleUpdate(pie.id, pie.name.trim())}
-            className="rounded-xl bg-secondary-500 px-2 py-1 font-medium text-white hover:bg-red-900"
-          >
-            Update
-          </button>
-        </div>
-      ))}
+        {pizza.map((pie) => (
+          <ReusableInputWithButton
+            handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
+            name={pie.name}
+            id={pie.id}
+            handlePizzaNameChange={handlePizzaNameChange}
+          />
+        ))}
+      </div>
       <Footer />
     </div>
   );

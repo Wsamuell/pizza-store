@@ -7,6 +7,8 @@ import {
 } from '@/helpers/supabaseClient';
 import { Topping } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
+import InputBar from '@/components/InputBar';
+import ReusableInputWithButton from '@/components/ReusableInputWithButton';
 
 const ManageToppings: React.FC = () => {
   const [toppings, setToppings] = useState<Topping[]>([]);
@@ -84,51 +86,21 @@ const ManageToppings: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-wrap items-center justify-evenly p-5"
-      >
-        <input
-          type="text"
-          name="userNameInput"
-          className=" focus:ring-primary-600 focus:border-primary-600 w block w-1/2 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
-          placeholder="Sam's Special"
-          onChange={handleNameChange}
-          value={name}
-        />
-        <button
-          type="submit"
-          className={`hover:bg-primary-700 rounded-lg bg-secondary-500 px-5 py-2.5 text-center text-sm font-medium text-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-300 ${
-            name === '' ? 'opacity-25' : ''
-          }`}
-          disabled={name === ''}
-        >
-          Insert Pizza
-        </button>
-      </form>
-
+    <div className="flex justify-center">
+      <InputBar
+        handleSubmit={handleSubmit}
+        placeholder={'Add a new topping...'}
+        handleNameChange={handleNameChange}
+        inputValue={name}
+      />
       {toppings.map((topping) => (
-        <div key={topping.id} className="flex items-center px-8 py-4">
-          <input
-            type="text"
-            value={topping.name}
-            onChange={(event) => handleToppingNameChange(event, topping.id)}
-            className="focus:ring-primary-600 focus:border-primary-600 w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
-          />
-          <button
-            onClick={() => handleDelete(topping.id)}
-            className="rounded-xl bg-red-500 px-2 py-1 font-medium text-white hover:bg-red-900"
-          >
-            Remove
-          </button>
-          <button
-            onClick={() => handleUpdate(topping.id, topping.name.trim())}
-            className="rounded-xl bg-secondary-500 px-2 py-1 font-medium text-white hover:bg-red-900"
-          >
-            Update
-          </button>
-        </div>
+        <ReusableInputWithButton
+          handleDelete={handleDelete}
+          handleUpdate={handleUpdate}
+          name={topping.name}
+          id={topping.id}
+          handlePizzaNameChange={handleToppingNameChange}
+        />
       ))}
       <Footer />
     </div>

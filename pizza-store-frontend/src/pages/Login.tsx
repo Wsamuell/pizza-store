@@ -46,8 +46,6 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
   if (getUserAuthenticated === LogInStatus.Success) {
     setUserAuthenticated(LogInStatus.Success);
     navigate(route);
-    console.log('I got here');
-    // reRoute(navigate);
   }
   const login = async () => {
     const { data } = await postgrest
