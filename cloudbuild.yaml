@@ -7,4 +7,23 @@ steps:
     entrypoint: 'yarn'
     args: ['build']
   - name: 'docker/compose'
-    args: ['up', '-d']
+    args: ['build']
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/pizza-man-391321/pizza/db:latest'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/pizza-man-391321/pizza/app:latest'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/pizza-man-391321/pizza/postgrest:latest'
+
+images:
+  [
+    'gcr.io/pizza-man-391321/pizza/app:latest',
+    'gcr.io/pizza-man-391321/pizza/db:latest',
+    'gcr.io/pizza-man-391321/pizza/postgrest:latest',
+  ]

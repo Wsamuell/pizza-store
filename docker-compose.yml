@@ -1,12 +1,15 @@
 version: '3.3'
 services:
   db:
+    build:
+      context: ./
+      dockerfile: Dockerfile-db
     container_name: db
     env_file:
       - ./.env
     expose:
       - '3001'
-    image: postgres
+    image: gcr.io/pizza-man-391321/pizza/db:latest
     networks:
       - network
     ports:
@@ -15,9 +18,11 @@ services:
     volumes:
       - ./pizza-store-backend/dbinit:/docker-entrypoint-initdb.d
       - data:/var/lib/postgresql/data
-      - ./:/workspace
 
   postgrest:
+    build:
+      context: ./
+      dockerfile: Dockerfile-postgrest
     container_name: postgrest
     depends_on:
       - db
@@ -25,37 +30,23 @@ services:
       - ./.env
     expose:
       - '3000'
-    image: postgrest/postgrest
+    image: gcr.io/pizza-man-391321/pizza/postgrest:latest
     networks:
       - network
     ports:
       - 3000:3000
     restart: always
-    volumes:
-      - ./:/workspace
-
-  # swagger:
-  #   container_name: swagger
-  #   depends_on:
-  #     - postgrest
-  #   environment:
-  #     API_URL: http://localhost:3000/
-  #   expose:
-  #     - '3002'
-  #   image: swaggerapi/swagger-ui
-  #   networks:
-  #     - network
-  #   ports:
-  #     - 3002:8080
-  #   restart: always
 
   app:
+    build:
+      context: ./
+      dockerfile: Dockerfile-app
     container_name: app
     depends_on:
       - postgrest
     expose:
       - '80'
-    image: nginx:mainline-alpine
+    image: gcr.io/pizza-man-391321/pizza/app:latest
     networks:
       - network
     ports:
