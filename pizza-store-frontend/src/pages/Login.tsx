@@ -3,7 +3,7 @@ import LogInImg from '@/assets/LogInImg.png';
 import { motion } from 'framer-motion';
 import Footer from '@/scenes/footer/footer';
 import ContactUs from '@/scenes/contact';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   LogInStatus,
   SelectedPage,

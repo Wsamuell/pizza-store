@@ -111,10 +111,6 @@ const ManagePizza = () => {
         const retrievedPizza = await getAllPizza();
         if (retrievedPizza) {
           setPizza(retrievedPizza);
-          // // Fetch toppings for each pizza
-          // retrievedPizza.forEach((pizza) => {
-          //   handleGetToppingsOnPizza(pizza.id);
-          // });
         } else {
           console.log('Failed to retrieve Pizza.');
         }
@@ -135,22 +131,6 @@ const ManagePizza = () => {
     fetchToppings();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const retrievedPizza = await getAllPizza();
-  //       if (retrievedPizza) {
-  //         setPizza(retrievedPizza);
-  //       } else {
-  //         console.log('Failed to retrieve Pizza.');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error retrieving Pizza:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
   return (
     <div className="app">
       <LogOutNav isTopOfPage={isTopOfPage} />
@@ -172,7 +152,7 @@ const ManagePizza = () => {
               id={pie.id}
               handlePizzaNameChange={handlePizzaNameChange}
             >
-              <ToppingsBox toppings={toppings} />
+              <ToppingsBox toppings={toppings} pizzaId={pie.id} />
             </ReusableInputWithButton>
           </div>
         ))}

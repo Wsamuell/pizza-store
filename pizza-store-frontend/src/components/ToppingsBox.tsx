@@ -1,9 +1,29 @@
+import { getAllToppingsOnPizza } from '@/helpers/supabaseClient';
 import { Topping } from '@/helpers/types';
+import { useEffect, useState } from 'react';
 
 type Props = {
   toppings: Topping[];
+  pizzaId: number;
 };
-const ToppingsBox = ({ toppings }: Props) => {
+const ToppingsBox = ({ toppings, pizzaId }: Props) => {
+  // useEffect(() => {
+  //   const [pizzaToppings, setPizzaToppings] = useState<Topping[]>([]);
+  //   const fetchToppingOnPizza = async () => {
+  //     try {
+  //       const retrievedToppings = await getAllToppingsOnPizza(pizzaId);
+  //       if (retrievedToppings) {
+  //         console.log('Retrieved Pizza:', retrievedToppings);
+  //         // setPizzaToppings(retrievedToppings);
+  //         console.log(pizzaToppings);
+  //       } else {
+  //         console.log('Failed to retrieve Pizza.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error retrieving Pizza:', error);
+  //     }
+  //   };
+  // }, [pizzaId]);
   return (
     <div className="flex justify-center">
       <div className="flex flex-wrap justify-center">

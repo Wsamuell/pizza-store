@@ -1,5 +1,4 @@
 import { PostgrestClient } from '@supabase/postgrest-js';
-import { Topping } from './types';
 
 const REST_URL = 'http://localhost:3000';
 
@@ -144,7 +143,7 @@ export const getAllToppingsOnPizza = async (id: number) => {
   try {
     const { data, error } = await postgrest
       .from('pizza_with_topping')
-      .select('pizza_id, toppings(id, name)')
+      .select('toppings(id, name)')
       .eq('pizza_id', id);
 
     if (error) {
