@@ -9,15 +9,29 @@ import { Topping } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
 import InputBar from '@/components/InputBar';
 import ReusableInputWithButton from '@/components/ReusableInputWithButton';
+import LogOutNav from '@/components/LogOutNav';
 
 const ManageToppings: React.FC = () => {
   const [toppings, setToppings] = useState<Topping[]>([]);
+  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
+
   const [name, setName] = useState('');
   const newTopping: Topping = {
     id: toppings.length + 1,
     name: name,
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+      } else {
+        setIsTopOfPage(false);
+      }
+    };
 
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -86,7 +100,8 @@ const ManageToppings: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex justify-center">
+    <div className="app">
+      <LogOutNav isTopOfPage={isTopOfPage} />
       <InputBar
         handleSubmit={handleSubmit}
         placeholder={'Add a new topping...'}
@@ -95,6 +110,7 @@ const ManageToppings: React.FC = () => {
       />
       {toppings.map((topping) => (
         <ReusableInputWithButton
+          key={topping.id}
           handleDelete={handleDelete}
           handleUpdate={handleUpdate}
           name={topping.name}

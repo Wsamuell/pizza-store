@@ -61,7 +61,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
             <form
               className="mb-4 rounded-lg bg-white p-3 shadow"
               target="_blank"
-              onSubmit={onSubmit}
+              onSubmit={() => onSubmit}
               method="POST"
               action="https://formsubmit.co/ebcb4d5f8ee8dfe6d29cc3d87eb33e82"
             >
@@ -74,6 +74,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                 </label>
                 <input
                   className="focus:ring-primary-600 focus:border-primary-600  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+                  autoComplete="off"
                   typeof="text"
                   placeholder="Samuel L. Jackson"
                   {...register('name', {
@@ -97,6 +98,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                 </label>
                 <input
                   className="focus:ring-primary-600 focus:border-primary-600  block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900"
+                  autoComplete="off"
                   typeof="text"
                   placeholder="Email@gmail.com"
                   {...register('email', {
@@ -154,7 +156,7 @@ const ContactUs = ({ setSelectedPage }: Props) => {
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <div className="w-full before:absolute before:-bottom-20 before:-right-10 before:z-[-1] md:before:content-evolvetext">
+            <div className="md:before:content-evolvetext w-full before:absolute before:-bottom-20 before:-right-10 before:z-[-1]">
               <img
                 className="w-full"
                 alt="contact-us-page-graphic"

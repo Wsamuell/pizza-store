@@ -3,7 +3,7 @@ import LogInImg from '@/assets/LogInImg.png';
 import { motion } from 'framer-motion';
 import Footer from '@/scenes/footer/footer';
 import ContactUs from '@/scenes/contact';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import {
   LogInStatus,
   SelectedPage,
@@ -13,6 +13,7 @@ import {
 } from '@/helpers/types';
 import { useNavigate } from 'react-router-dom';
 import { postgrest } from '@/helpers/supabaseClient';
+import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 type Props = {
   userAuthenticated: LogInStatus;
@@ -105,7 +106,9 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
                 <form
                   className="space-y-4 md:space-y-6"
                   action="#"
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={(e) => {
+                    e.preventDefault(), login();
+                  }}
                 >
                   <div>
                     <label className="mb-2 block text-sm font-medium text-gray-500">
@@ -137,33 +140,32 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
                       <p className="mt-1 text-xs text-rose-500">
                         Invalid User Credentials
                       </p>
-                    )}{' '}
+                    )}
                   </div>
                   <div className="flex items-center">
-                    <a
-                      href="#"
-                      className="text-primary-600 text-sm font-medium hover:underline"
+                    <AnchorLink
+                      className="text-sm font-medium text-gray-500  hover:underline"
+                      onClick={() => setSelectedPage(SelectedPage.ContactUs)}
+                      href={`#${SelectedPage.ContactUs}`}
                     >
-                      Forgot password?
-                    </a>
+                      <p className=""> Forgot password?</p>
+                    </AnchorLink>
                   </div>
                   <button
                     type="submit"
                     className={`hover:bg-primary-700 w-full rounded-lg bg-secondary-500 px-5 py-2.5 text-center text-sm font-medium text-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-300 ${disabledStyle}`}
                     disabled={isDisabled}
-                    onClick={login}
                   >
                     Sign In
                   </button>
-                  <p className="text-sm font-light text-gray-500 ">
-                    Need an account?{' '}
-                    <a
-                      href="#"
-                      className="text-primary-600 font-medium hover:underline"
-                    >
-                      Request Access
-                    </a>
-                  </p>
+
+                  <AnchorLink
+                    className="text-primary-600 text-sm font-medium text-gray-500 hover:underline"
+                    onClick={() => setSelectedPage(SelectedPage.ContactUs)}
+                    href={`#${SelectedPage.ContactUs}`}
+                  >
+                    <p className="m-1"> Need an account? Request Access</p>
+                  </AnchorLink>
                 </form>
               </div>
             </div>

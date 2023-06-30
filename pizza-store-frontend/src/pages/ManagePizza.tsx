@@ -1,4 +1,5 @@
 import InputBar from '@/components/InputBar';
+import LogOutNav from '@/components/LogOutNav';
 import ReusableInputWithButton from '@/components/ReusableInputWithButton';
 import {
   deletePizza,
@@ -14,6 +15,8 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 const ManagePizza = () => {
   const [pizza, setPizza] = useState<Pizza[]>([]);
   const [toppingsData, setToppingsData] = useState({});
+  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
+
   const [name, setName] = useState('');
   // const [toppings, setToppings] = useState([]);
 
@@ -22,6 +25,18 @@ const ManagePizza = () => {
     name: name,
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setIsTopOfPage(true);
+      } else {
+        setIsTopOfPage(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -134,7 +149,9 @@ const ManagePizza = () => {
     fetchData();
   }, []);
   return (
-    <div>
+    <div className="app">
+      <LogOutNav isTopOfPage={isTopOfPage} />
+
       <div>
         <InputBar
           handleSubmit={handleSubmit}
@@ -144,6 +161,7 @@ const ManagePizza = () => {
         />
         {pizza.map((pie) => (
           <ReusableInputWithButton
+            key={pie.id}
             handleDelete={handleDelete}
             handleUpdate={handleUpdate}
             name={pie.name}

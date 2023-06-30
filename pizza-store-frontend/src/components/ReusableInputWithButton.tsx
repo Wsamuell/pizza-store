@@ -47,7 +47,6 @@ const ReusableInputWithButton = ({
             </div>
             <input
               type="text"
-              id="voice-search"
               className="focus:border-secondary-500-500 focus:ring-secondary-500-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900"
               value={name}
               onChange={(event) => handlePizzaNameChange(event, id)}
