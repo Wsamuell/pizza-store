@@ -3,7 +3,6 @@ import Logo from '@/assets/Logo.png';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { useState } from 'react';
 import { Link as RouteLink } from 'react-router-dom';
-import LinkButton from '@/helpers/LinkButton';
 
 type Props = {
   isTopOfPage: boolean;

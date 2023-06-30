@@ -6,7 +6,6 @@ import {
   deletePizza,
   getAllPizza,
   getAllToppings,
-  getAllToppingsOnPizza,
   insertPizza,
   updatePizza,
 } from '@/helpers/supabaseClient';
