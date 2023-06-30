@@ -39,8 +39,8 @@ const ReusableInputWithButton = ({
         visible: { opacity: 1, x: 0 },
       }}
     >
-      <div className=" flex w-1/2 transform flex-wrap items-center justify-around  rounded-xl bg-white p-5 shadow-lg transition duration-500 hover:scale-105 hover:shadow-xl">
-        <div className="flex flex-row flex-wrap justify-center sm:flex-nowrap md:w-1/2">
+      <div className=" flex w-full transform flex-wrap items-center  justify-evenly rounded-xl bg-white p-5 shadow-lg transition duration-500 hover:scale-105 hover:shadow-xl md:w-1/2">
+        <div className="flex flex-row flex-nowrap justify-center sm:flex-nowrap md:w-1/2">
           <div className="relative w-full">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <PaperAirplaneIcon className="h-6 w-6" />
@@ -66,9 +66,8 @@ const ReusableInputWithButton = ({
         >
           <MinusIcon className="h-6 w-6" />
         </button>
+        <div>{children}</div>
       </div>
-
-      {children}
     </motion.div>
   );
 };

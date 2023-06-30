@@ -1,9 +1,11 @@
 import InputBar from '@/components/InputBar';
 import LogOutNav from '@/components/LogOutNav';
 import ReusableInputWithButton from '@/components/ReusableInputWithButton';
+import ToppingsBox from '@/components/ToppingsBox';
 import {
   deletePizza,
   getAllPizza,
+  getAllToppings,
   getAllToppingsOnPizza,
   insertPizza,
   updatePizza,
@@ -14,7 +16,11 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 const ManagePizza = () => {
   const [pizza, setPizza] = useState<Pizza[]>([]);
-  const [toppingsData, setToppingsData] = useState({});
+  // const [toppingsData, setToppingsData] = useState<{
+  //   [key: number]: Topping[];
+  // }>({});
+  const [toppings, setToppings] = useState<Topping[]>([]);
+
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   const [name, setName] = useState('');
@@ -89,33 +95,25 @@ const ManagePizza = () => {
     }
   };
 
-  const handleGetToppingsOnPizza = async (id: number) => {
-    try {
-      const allToppings = await getAllToppingsOnPizza(id);
-      const toppingsData = allToppings?.map((a) => a);
+  // const handleGetToppingsOnPizza = async (id: number) => {
+  //   try {
+  //     const allToppings = await getAllToppingsOnPizza(id);
+  //     const toppingsData = allToppings?.map((a) => a);
 
-      setToppingsData((prevData) => ({ ...prevData, toppingsData }));
-    } catch (error) {
-      console.error('Error retrieving ToppingsOnPizza:', error);
-    }
-  };
-
-  // getAllToppingsOnPizza(1);
-  // on delete of pizza we want to first find all toppings and delete them
-  // useEffect(() => {
-  //   pizza.map((pie) => {
-  //     console.log('Im here');
-  //     handleGetToppingsOnPizza(pie.id);
-  //   });
-  // }, [pizza, toppingsData]);
+  //     setToppingsData((prevData) => ({ ...prevData, toppingsData }));
+  //   } catch (error) {
+  //     console.error('Error retrieving ToppingsOnPizza:', error);
+  //   }
+  // };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const retrievedPizza = await getAllPizza();
         if (retrievedPizza) {
           setPizza(retrievedPizza);
-          // retrievedPizza.forEach((pie) => {
-          //   handleGetToppingsOnPizza(pie.id);
+          // // Fetch toppings for each pizza
+          // retrievedPizza.forEach((pizza) => {
+          //   handleGetToppingsOnPizza(pizza.id);
           // });
         } else {
           console.log('Failed to retrieve Pizza.');
@@ -124,30 +122,35 @@ const ManagePizza = () => {
         console.error('Error retrieving Pizza:', error);
       }
     };
-
-    fetchData();
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const retrievedPizza = await getAllPizza();
-        if (retrievedPizza) {
-          setPizza(retrievedPizza);
-
-          retrievedPizza.forEach((pie) => {
-            console.log('yay');
-            handleGetToppingsOnPizza(pie.id);
-          });
-        } else {
-          console.log('Failed to retrieve Pizza.');
-        }
-      } catch (error) {
-        console.error('Error retrieving Pizza:', error);
+    const fetchToppings = async () => {
+      const retrievedToppings = await getAllToppings();
+      if (retrievedToppings) {
+        setToppings(retrievedToppings);
+      } else {
+        console.log('Failed to retrieve toppings.');
       }
     };
 
     fetchData();
+    fetchToppings();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const retrievedPizza = await getAllPizza();
+  //       if (retrievedPizza) {
+  //         setPizza(retrievedPizza);
+  //       } else {
+  //         console.log('Failed to retrieve Pizza.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error retrieving Pizza:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
   return (
     <div className="app">
       <LogOutNav isTopOfPage={isTopOfPage} />
@@ -160,14 +163,18 @@ const ManagePizza = () => {
           inputValue={name}
         />
         {pizza.map((pie) => (
-          <ReusableInputWithButton
-            key={pie.id}
-            handleDelete={handleDelete}
-            handleUpdate={handleUpdate}
-            name={pie.name}
-            id={pie.id}
-            handlePizzaNameChange={handlePizzaNameChange}
-          />
+          <div className="m-4 flex flex-col justify-center">
+            <ReusableInputWithButton
+              key={pie.id}
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
+              name={pie.name}
+              id={pie.id}
+              handlePizzaNameChange={handlePizzaNameChange}
+            >
+              <ToppingsBox toppings={toppings} />
+            </ReusableInputWithButton>
+          </div>
         ))}
       </div>
       <Footer />

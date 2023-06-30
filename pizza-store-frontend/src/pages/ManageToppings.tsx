@@ -108,16 +108,18 @@ const ManageToppings: React.FC = () => {
         handleNameChange={handleNameChange}
         inputValue={name}
       />
-      {toppings.map((topping) => (
-        <ReusableInputWithButton
-          key={topping.id}
-          handleDelete={handleDelete}
-          handleUpdate={handleUpdate}
-          name={topping.name}
-          id={topping.id}
-          handlePizzaNameChange={handleToppingNameChange}
-        />
-      ))}
+      <div className="flex flex-col">
+        {toppings.map((topping) => (
+          <ReusableInputWithButton
+            key={topping.id}
+            handleDelete={handleDelete}
+            handleUpdate={handleUpdate}
+            name={topping.name}
+            id={topping.id}
+            handlePizzaNameChange={handleToppingNameChange}
+          />
+        ))}
+      </div>
       <Footer />
     </div>
   );

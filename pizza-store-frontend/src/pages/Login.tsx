@@ -21,10 +21,9 @@ type Props = {
 };
 const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
   const getUserAuthenticated = localStorage.getItem('userAuthenticated');
-
+  let userType = localStorage.getItem('userType');
   const navigate = useNavigate();
 
-  const userType = localStorage.getItem('userType');
   const route =
     userType === UserType.Chef ? UserPrivateRoute.Chef : UserPrivateRoute.Owner;
   useEffect(() => {
@@ -58,9 +57,15 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
 
     if (user?.user_name === userNameInput && user?.password === passWordInput) {
       setUserAuthenticated(LogInStatus.Success);
+      userType = userNameInput;
       localStorage.setItem('userAuthenticated', LogInStatus.Success);
       localStorage.setItem('userType', user?.user_name);
-      // reRoute(navigate);
+      const route =
+        userType === UserType.Chef
+          ? UserPrivateRoute.Chef
+          : UserPrivateRoute.Owner;
+
+      navigate(route);
     } else {
       setUserAuthenticated(LogInStatus.Failed);
     }
@@ -107,7 +112,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
                   className="space-y-4 md:space-y-6"
                   action="#"
                   onSubmit={(e) => {
-                    e.preventDefault(), login();
+                    e.preventDefault();
                   }}
                 >
                   <div>
@@ -155,6 +160,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
                     type="submit"
                     className={`hover:bg-primary-700 w-full rounded-lg bg-secondary-500 px-5 py-2.5 text-center text-sm font-medium text-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-300 ${disabledStyle}`}
                     disabled={isDisabled}
+                    onClick={() => login()}
                   >
                     Sign In
                   </button>
