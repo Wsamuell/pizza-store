@@ -15,15 +15,11 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 const ManagePizza = () => {
   const [pizza, setPizza] = useState<Pizza[]>([]);
-  // const [toppingsData, setToppingsData] = useState<{
-  //   [key: number]: Topping[];
-  // }>({});
   const [toppings, setToppings] = useState<Topping[]>([]);
 
   const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
 
   const [name, setName] = useState('');
-  // const [toppings, setToppings] = useState([]);
 
   const newPizza: Pizza = {
     id: pizza.length + 1,
@@ -94,16 +90,6 @@ const ManagePizza = () => {
     }
   };
 
-  // const handleGetToppingsOnPizza = async (id: number) => {
-  //   try {
-  //     const allToppings = await getAllToppingsOnPizza(id);
-  //     const toppingsData = allToppings?.map((a) => a);
-
-  //     setToppingsData((prevData) => ({ ...prevData, toppingsData }));
-  //   } catch (error) {
-  //     console.error('Error retrieving ToppingsOnPizza:', error);
-  //   }
-  // };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -151,7 +137,11 @@ const ManagePizza = () => {
               id={pie.id}
               handlePizzaNameChange={handlePizzaNameChange}
             >
-              <ToppingsBox toppings={toppings} pizzaId={pie.id} />
+              <ToppingsBox
+                toppings={toppings}
+                pizzaId={pie.id}
+                key={pie.name}
+              />
             </ReusableInputWithButton>
           </div>
         ))}

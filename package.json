@@ -12,5 +12,8 @@
   "workspaces": [
     "pizza-store-backend",
     "pizza-store-frontend"
-  ]
+  ],
+  "devDependencies": {
+    "firebase-tools": "^12.4.2"
+  }
 }

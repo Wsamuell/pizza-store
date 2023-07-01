@@ -208,20 +208,24 @@ export const deleteAToppingsOnPizza = async (id: number, toppingId: number) => {
     return null;
   }
 };
-// export const togglePizzaToppig = async (pizzaId: number, toppingId: number) => {
-//   try {
-//     const { data, error } = await postgrest
-//       .rpc('toggle_topping')
-//       .eq('id', 1)
-//       .single();
+export const togglePizzaTopping = async (
+  pizzaId: number,
+  toppingId: number
+) => {
+  try {
+    const { data, error } = await postgrest.rpc('toggle_topping', {
+      pizza_id: pizzaId,
+      toppings_id: toppingId,
+    });
 
-//     if (error) {
-//       throw new Error(error.message);
-//     }
+    console.log(data);
+    if (error) {
+      throw new Error(error.message);
+    }
 
-//     return data;
-//   } catch (error) {
-//     console.error('Error Deleting this topping:', error);
-//     return null;
-//   }
-// };
+    return data;
+  } catch (error) {
+    console.error('Error toggling this topping:', error);
+    return null;
+  }
+};
