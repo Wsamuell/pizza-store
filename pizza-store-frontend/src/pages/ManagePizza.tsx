@@ -128,20 +128,15 @@ const ManagePizza = () => {
           inputValue={name}
         />
         {pizza.map((pie) => (
-          <div className="m-4 flex flex-col justify-center">
+          <div className="m-4 flex flex-col justify-center" key={pie.id}>
             <ReusableInputWithButton
-              key={pie.id}
               handleDelete={handleDelete}
               handleUpdate={handleUpdate}
               name={pie.name}
               id={pie.id}
               handlePizzaNameChange={handlePizzaNameChange}
             >
-              <ToppingsBox
-                toppings={toppings}
-                pizzaId={pie.id}
-                key={pie.name}
-              />
+              <ToppingsBox toppings={toppings} pizzaId={pie.id} />
             </ReusableInputWithButton>
           </div>
         ))}
