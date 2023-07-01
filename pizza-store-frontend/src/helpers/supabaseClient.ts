@@ -1,6 +1,6 @@
 import { PostgrestClient } from '@supabase/postgrest-js';
 
-const REST_URL = 'http://localhost:3000';
+const REST_URL = 'https://postgrest-747in4by3q-uc.a.run.app';
 
 export const postgrest = new PostgrestClient(REST_URL);
 
