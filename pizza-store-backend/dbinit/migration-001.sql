@@ -5,7 +5,7 @@ CREATE USER anon;
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
     GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO anon;
     GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
-
+		GRANT anon to postgres;
 
 
 -- create toppings table
@@ -93,3 +93,31 @@ $$;
 
 GRANT EXECUTE ON FUNCTION public.get_pizza_toppings(text) TO authenticator;
 
+CREATE OR REPLACE FUNCTION public.toggle_topping (pizza_id int, toppings_id int)
+	RETURNS INTEGER
+	LANGUAGE plpgsql
+	AS $$
+DECLARE
+	row_exists INTEGER;
+BEGIN
+	SELECT
+		1 INTO row_exists
+	FROM
+		public.pizza_with_topping pt
+	WHERE
+		pt.pizza_id = toggle_topping.pizza_id
+		AND pt.toppings_id = toggle_topping.toppings_id;
+	IF(row_exists > 0) THEN
+		DELETE FROM public.pizza_with_topping pt
+		WHERE pt.pizza_id = toggle_topping.pizza_id
+			AND pt.toppings_id = toggle_topping.toppings_id;
+ RETURN 0;
+	ELSE
+		INSERT INTO public.pizza_with_topping (pizza_id, toppings_id)
+			VALUES(toggle_topping.pizza_id, toggle_topping.toppings_id);
+		RETURN 1;
+	END IF;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.toggle_topping(int, int) TO authenticator;
