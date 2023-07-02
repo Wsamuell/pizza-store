@@ -48,7 +48,7 @@ const ManagePizza = () => {
     }
 
     try {
-      await insertPizza(newPizza.name, newPizza.id);
+      await insertPizza(newPizza.name);
       setPizza([...pizza, newPizza]);
     } catch (error) {
       console.error('Error adding new pizza:', error);

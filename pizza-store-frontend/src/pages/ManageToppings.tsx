@@ -55,7 +55,7 @@ const ManageToppings: React.FC = () => {
     }
 
     try {
-      await insertToppings(newTopping.name, newTopping.id);
+      await insertToppings(newTopping.name);
       setToppings([...toppings, newTopping]);
     } catch (error) {
       console.error('Error adding new topping:', error);

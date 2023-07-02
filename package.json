@@ -6,6 +6,7 @@
   "scripts": {
     "build": "yarn workspace pizza-store-backend run build && yarn workspace pizza-store-frontend run build",
     "build:clean": "yarn build && yarn force:restart",
+    "build:local:preview": "yarn workspace pizza-store-frontend run build && yarn workspace pizza-store-frontend run preview",
     "start": "docker compose up -d",
     "force:restart": "docker compose down --volumes && docker compose up --build -d"
   },

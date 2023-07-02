@@ -122,3 +122,5 @@ $$;
 
 GRANT EXECUTE ON FUNCTION public.toggle_topping(int, int) TO authenticator;
 GRANT USAGE, SELECT, UPDATE ON SEQUENCE pizza_with_topping_id_seq TO authenticator;
+GRANT USAGE, SELECT ON SEQUENCE pizza_id_seq TO authenticator;
+GRANT USAGE, SELECT ON SEQUENCE toppings_id_seq TO authenticator;
