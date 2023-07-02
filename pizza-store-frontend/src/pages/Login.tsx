@@ -182,7 +182,6 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
       <Footer />
     </section>
   );
-  // };
 };
 
 export default LogIn;

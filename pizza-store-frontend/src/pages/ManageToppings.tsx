@@ -10,6 +10,7 @@ import Footer from '@/scenes/footer/footer';
 import InputBar from '@/components/InputBar';
 import ReusableInputWithButton from '@/components/ReusableInputWithButton';
 import LogOutNav from '@/components/LogOutNav';
+import { Reorder } from 'framer-motion';
 
 const ManageToppings: React.FC = () => {
   const [toppings, setToppings] = useState<Topping[]>([]);
@@ -108,18 +109,23 @@ const ManageToppings: React.FC = () => {
         handleNameChange={handleNameChange}
         inputValue={name}
       />
-      <div className="flex flex-col">
+      <Reorder.Group
+        values={toppings}
+        onReorder={setToppings}
+        className="flex flex-col"
+      >
         {toppings.map((topping) => (
-          <ReusableInputWithButton
-            key={topping.id}
-            handleDelete={handleDelete}
-            handleUpdate={handleUpdate}
-            name={topping.name}
-            id={topping.id}
-            handlePizzaNameChange={handleToppingNameChange}
-          />
+          <Reorder.Item value={topping} key={topping.id}>
+            <ReusableInputWithButton
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
+              name={topping.name}
+              id={topping.id}
+              handlePizzaNameChange={handleToppingNameChange}
+            />
+          </Reorder.Item>
         ))}
-      </div>
+      </Reorder.Group>
       <Footer />
     </div>
   );

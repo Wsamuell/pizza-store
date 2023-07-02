@@ -162,8 +162,6 @@ export const updatePizza = async (name: string, id: number) => {
   }
 };
 
-// Toppings To Pizza: BKMRK: needs work
-
 export const getAllToppingsOnPizza = async (id: number) => {
   try {
     const { data, error } = await postgrest

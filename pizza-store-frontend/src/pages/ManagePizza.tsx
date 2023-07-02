@@ -11,6 +11,8 @@ import {
 } from '@/helpers/supabaseClient';
 import { Pizza, Topping } from '@/helpers/types';
 import Footer from '@/scenes/footer/footer';
+import { Reorder } from 'framer-motion';
+
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 const ManagePizza = () => {
@@ -78,12 +80,15 @@ const ManagePizza = () => {
   };
   const handleUpdate = async (id: number, name: string) => {
     try {
+      console.log(pizza);
       await updatePizza(name, id);
-      const updatedPizza = pizza.map((pie) =>
+      const updatedPizzas = pizza.map((pie) =>
         pie.id === id ? { ...pie, name: name } : pie
       );
 
-      setPizza(updatedPizza);
+      setPizza(updatedPizzas);
+      console.log(pizza);
+
       console.log('Pizza updated successfully.');
     } catch (error) {
       console.error('Error updating Pizza:', error);
@@ -127,19 +132,25 @@ const ManagePizza = () => {
           handleNameChange={handleNameChange}
           inputValue={name}
         />
-        {pizza.map((pie) => (
-          <div className="m-4 flex flex-col justify-center" key={pie.id}>
-            <ReusableInputWithButton
-              handleDelete={handleDelete}
-              handleUpdate={handleUpdate}
-              name={pie.name}
-              id={pie.id}
-              handlePizzaNameChange={handlePizzaNameChange}
+        <Reorder.Group values={pizza} onReorder={setPizza}>
+          {pizza.map((pie) => (
+            <Reorder.Item
+              className="m-4 flex flex-col justify-center"
+              key={pie.id}
+              value={pie}
             >
-              <ToppingsBox toppings={toppings} pizzaId={pie.id} />
-            </ReusableInputWithButton>
-          </div>
-        ))}
+              <ReusableInputWithButton
+                handleDelete={handleDelete}
+                handleUpdate={handleUpdate}
+                name={pie.name}
+                id={pie.id}
+                handlePizzaNameChange={handlePizzaNameChange}
+              >
+                <ToppingsBox toppings={toppings} pizzaId={pie.id} />
+              </ReusableInputWithButton>
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
       </div>
       <Footer />
     </div>
