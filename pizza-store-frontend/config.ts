@@ -1,0 +1,3 @@
+export const supabaseUrl = 'https://cdibdrhtjhctdiglxcrn.supabase.co';
+export const supabaseKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkaWJkcmh0amhjdGRpZ2x4Y3JuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgyNDQxOTIsImV4cCI6MjAwMzgyMDE5Mn0.FRACI1DEIeE2gBubPwDAQFKTJpB_2tSUIzWA-aFosYw';

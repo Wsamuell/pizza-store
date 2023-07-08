@@ -1,14 +1,16 @@
-import { PostgrestClient } from '@supabase/postgrest-js';
+import { createClient } from '@supabase/supabase-js';
 
-const REST_URL = 'https://postgrest-747in4by3q-uc.a.run.app';
-// const testURL = 'http://localhost:3000';
+import { supabaseUrl, supabaseKey } from '../../config';
 
-export const postgrest = new PostgrestClient(REST_URL);
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Supabase URL or key not provided.');
+}
 
-// Toppings Logic
+export const supabase = createClient(supabaseUrl, supabaseKey);
+
 export const getAllToppings = async () => {
   try {
-    const { data, error } = await postgrest.from('toppings').select('*');
+    const { data, error } = await supabase.from('toppings').select('*');
 
     if (error) {
       throw new Error(error.message);
@@ -23,7 +25,7 @@ export const getAllToppings = async () => {
 
 export const insertToppings = async (name: string) => {
   try {
-    const { data, error } = await postgrest.from('toppings').insert([{ name }]);
+    const { data, error } = await supabase.from('toppings').insert([{ name }]);
 
     if (error) {
       throw new Error(error.message);
@@ -38,7 +40,7 @@ export const insertToppings = async (name: string) => {
 
 export const updateTopping = async (name: string, id: number) => {
   try {
-    const { data, error } = await postgrest
+    const { data, error } = await supabase
       .from('toppings')
       .update({ name })
       .eq('id', id);
@@ -57,7 +59,7 @@ export const updateTopping = async (name: string, id: number) => {
 
 export const getAllPizza = async () => {
   try {
-    const { data, error } = await postgrest.from('pizza').select('*');
+    const { data, error } = await supabase.from('pizza').select('*');
 
     if (error) {
       throw new Error(error.message);
@@ -71,7 +73,7 @@ export const getAllPizza = async () => {
 };
 export const insertPizza = async (name: string) => {
   try {
-    const { data, error } = await postgrest.from('pizza').insert([{ name }]);
+    const { data, error } = await supabase.from('pizza').insert([{ name }]);
 
     if (error) {
       throw new Error(error.message);
@@ -86,7 +88,7 @@ export const insertPizza = async (name: string) => {
 
 export const deleteAllToppingsOnPizza = async (id: number) => {
   try {
-    const { data, error } = await postgrest
+    const { data, error } = await supabase
       .from('pizza_with_topping')
       .delete()
       .eq('pizza_id', id);
@@ -104,11 +106,11 @@ export const deleteAllToppingsOnPizza = async (id: number) => {
 
 export const deleteTopping = async (id: number) => {
   try {
-    const { data: PizzaToppingData, error: PizzaToppingError } = await postgrest
+    const { data: PizzaToppingData, error: PizzaToppingError } = await supabase
       .from('pizza_with_topping')
       .delete()
       .eq('toppings_id', id);
-    const { data: toppingData, error: toppingError } = await postgrest
+    const { data: toppingData, error: toppingError } = await supabase
       .from('toppings')
       .delete()
       .eq('id', id);
@@ -125,11 +127,11 @@ export const deleteTopping = async (id: number) => {
 };
 export const deletePizza = async (id: number) => {
   try {
-    const { data: toppingData, error: toppingError } = await postgrest
+    const { data: toppingData, error: toppingError } = await supabase
       .from('pizza_with_topping')
       .delete()
       .eq('pizza_id', id);
-    const { data: pizzaData, error: pizzaError } = await postgrest
+    const { data: pizzaData, error: pizzaError } = await supabase
       .from('pizza')
       .delete()
       .eq('id', id);
@@ -147,7 +149,7 @@ export const deletePizza = async (id: number) => {
 
 export const updatePizza = async (name: string, id: number) => {
   try {
-    const { data, error } = await postgrest
+    const { data, error } = await supabase
       .from('pizza')
       .update({ name })
       .eq('id', id);
@@ -164,7 +166,7 @@ export const updatePizza = async (name: string, id: number) => {
 
 export const getAllToppingsOnPizza = async (id: number) => {
   try {
-    const { data, error } = await postgrest
+    const { data, error } = await supabase
       .from('pizza_with_topping')
       .select('toppings(id, name)')
       .eq('pizza_id', id);
@@ -181,7 +183,7 @@ export const getAllToppingsOnPizza = async (id: number) => {
 // this needs to take pizza_id and topping_id
 export const insertToppingOnPizza = async (name: string) => {
   try {
-    const { data, error } = await postgrest
+    const { data, error } = await supabase
       .from('pizza_with_topping')
       .insert([{ name }]);
 
@@ -198,7 +200,7 @@ export const insertToppingOnPizza = async (name: string) => {
 
 export const deleteAToppingsOnPizza = async (id: number, toppingId: number) => {
   try {
-    const { data, error } = await postgrest
+    const { data, error } = await supabase
       .from('pizza_with_topping')
       .delete()
       .eq('pizza_id', id)
@@ -219,7 +221,7 @@ export const togglePizzaTopping = async (
   toppingId: number
 ) => {
   try {
-    const { data, error } = await postgrest.rpc('toggle_topping', {
+    const { data, error } = await supabase.rpc('toggle_topping', {
       pizza_id: pizzaId,
       toppings_id: toppingId,
     });

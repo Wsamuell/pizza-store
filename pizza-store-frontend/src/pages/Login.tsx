@@ -12,7 +12,7 @@ import {
   UserType,
 } from '@/helpers/types';
 import { useNavigate } from 'react-router-dom';
-import { postgrest } from '@/helpers/supabaseClient';
+import { supabase } from '@/helpers/supabaseClient';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 type Props = {
@@ -26,11 +26,12 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
 
   const route =
     userType === UserType.Chef ? UserPrivateRoute.Chef : UserPrivateRoute.Owner;
+
   useEffect(() => {
     if (userAuthenticated === LogInStatus.Success && userType) {
       navigate(route);
     }
-  }, [userAuthenticated, userType]);
+  }, [userAuthenticated, userType, navigate, route]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,7 +49,7 @@ const LogIn = ({ userAuthenticated, setUserAuthenticated }: Props) => {
     navigate(route);
   }
   const login = async () => {
-    const { data } = await postgrest
+    const { data } = await supabase
       .from('users')
       .select('user_name, password')
       .eq(`user_name`, `${userNameInput}`);
